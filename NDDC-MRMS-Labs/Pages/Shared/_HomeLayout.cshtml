@@ -1,0 +1,209 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>NDDC - MRMS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="Niger Delta Development Commission" name="description" />
+    <meta content="NDDC" name="author" />
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="images/favicon.ico">
+
+    <!--Swiper slider css-->
+    <link href="libs/swiper/swiper-bundle.min.css" rel="stylesheet" type="text/css" />
+
+    <!-- Layout config Js -->
+    <script src="js/layout.js"></script>
+    <!-- Bootstrap Css -->
+    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <!-- Icons Css -->
+    <link href="css/icons.min.css" rel="stylesheet" type="text/css" />
+    <!-- App Css-->
+    <link href="css/app.min.css" rel="stylesheet" type="text/css" />
+    <!-- custom Css-->
+    <link href="css/custom.min.css" rel="stylesheet" type="text/css" />
+
+</head>
+<body data-bs-spy="scroll" data-bs-target="#navbar-example>
+    <div class="layout-wrapper landing">
+        <nav class="navbar navbar-expand-lg navbar-landing fixed-top" id="navbar">
+            <div class="container">
+                <a class="navbar-brand" href="Index">
+                    <img src="images/nddclogo.png" class="card-logo card-logo-dark" alt="logo dark" height="50">
+                    <img src="images/nddclogo.png" class="card-logo card-logo-light" alt="logo light" height="17">
+                </a>
+                <button class="navbar-toggler py-0 fs-20 text-body" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="mdi mdi-menu"></i>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mx-auto mt-2 mt-lg-0" id="navbar-example">
+                        <li class="nav-item">
+                            <a class="nav-link fs-15 active" href="Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link fs-15" href="#services">Laboratories</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link fs-15" href="#features">Features</a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link fs-15" href="#contact">Contact</a>
+                        </li>
+                    </ul>
+
+                    <div class="">
+                        <a href="nddc-mrms.azurewebsites.net" class="btn btn-link fw-medium text-decoration-none text-dark">
+                            Sign
+                            in
+                        </a>
+                        <a href="Registration" class="btn btn-primary">Register</a>
+                    </div>
+                </div>
+
+            </div>
+        </nav>
+        <!-- end navbar -->
+        <div class="vertical-overlay" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent.show"></div>
+
+        <div>
+            @RenderBody()
+        </div>
+        <section class="py-5 bg-primary position-relative">
+            <div class="bg-overlay bg-overlay-pattern opacity-50"></div>
+            <div class="container">
+                <div class="row align-items-center gy-4">
+                    <div class="col-sm">
+                        <div>
+                            <h4 class="text-white fw-semibold">Register Today!</h4>
+                            <p class="text-white-75 mb-0">Registration to get access to our MRMS System.</p>
+                        </div>
+                    </div>
+                    <!-- end col -->
+                    <div class="col-sm-auto">
+                        <a href="Registration" class="btn btn-danger" type="button">Register Now <i class="ri-arrow-right-line align-bottom"></i></a>
+                    </div>
+                    <!-- end col -->
+                </div>
+                <!-- end row -->
+            </div>
+            <!-- end container -->
+        </section>
+        <footer class="custom-footer bg-dark py-5 position-relative">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4 mt-4">
+                        <div>
+                            <div>
+                                <img src="images/nddclogo.png" alt="logo light" height="50">
+                            </div>
+                            <div class="mt-4" fs-13"="">
+                                <p>Niger Delta Development Commission</p>
+                                <p class="ff-secondary">
+                                    This portal is purpose built by the Niger Delta Development Commission to provide online Data Management Services to our approved Health Care Providers.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-7 ms-lg-auto">
+                        <div class="row">
+                            <div class="col-sm-4 mt-4">
+                                
+                            </div>
+                            <div class="col-sm-4 mt-4">
+                                
+                            </div>
+                            <div class="col-sm-4 mt-4">
+                                <h5 class="text-white mb-0">Support</h5>
+                                <div class="text-muted mt-3">
+                                    <ul class="list-unstyled ff-secondary footer-list fs-14">
+                                        <li><a href="pages-faqs.html">FAQ</a></li>
+                                        <li><a href="pages-faqs.html">Contact</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row text-center text-sm-start align-items-center mt-5">
+                    <div class="col-sm-6">
+
+                        <div>
+                            <p class="copy-rights mb-0">
+                                <script>
+                                    document.write(new Date().getFullYear())
+                                </script> © Niger Delta Development Commission
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="text-sm-end mt-3 mt-sm-0">
+                            <ul class="list-inline mb-0 footer-social-link">
+                                <li class="list-inline-item">
+                                    <a href="javascript: void(0);" class="avatar-xs d-block">
+                                        <div class="avatar-title rounded-circle">
+                                            <i class="ri-facebook-fill"></i>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a href="javascript: void(0);" class="avatar-xs d-block">
+                                        <div class="avatar-title rounded-circle">
+                                            <i class="ri-github-fill"></i>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a href="javascript: void(0);" class="avatar-xs d-block">
+                                        <div class="avatar-title rounded-circle">
+                                            <i class="ri-linkedin-fill"></i>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a href="javascript: void(0);" class="avatar-xs d-block">
+                                        <div class="avatar-title rounded-circle">
+                                            <i class="ri-google-fill"></i>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a href="javascript: void(0);" class="avatar-xs d-block">
+                                        <div class="avatar-title rounded-circle">
+                                            <i class="ri-dribbble-line"></i>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <button onclick="topFunction()" class="btn btn-danger btn-icon landing-back-top" id="back-to-top" style="display: block;">
+            <i class="ri-arrow-up-line"></i>
+        </button>
+    </div>
+    <!-- end layout wrapper -->
+    <!-- JAVASCRIPT -->
+    <script src="libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="libs/simplebar/simplebar.min.js"></script>
+    <script src="libs/node-waves/waves.min.js"></script>
+    <script src="libs/feather-icons/feather.min.js"></script>
+    <script src="js/pages/plugins/lord-icon-2.1.0.js"></script>
+    <script src="js/plugins.js"></script>
+
+    <!--Swiper slider js-->
+    <script src="libs/swiper/swiper-bundle.min.js"></script>
+
+    <!-- landing init -->
+    <script src="js/pages/landing.init.js"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
