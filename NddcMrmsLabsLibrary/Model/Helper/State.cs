@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace NddcMrmsLabsLibrary.Model.Helper
 {
-    internal class State
+    public class State
     {
+        public int SID { get; set; }
+        public string StateName { get; set; }
     }
 }
