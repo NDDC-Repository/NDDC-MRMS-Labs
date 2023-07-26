@@ -40,6 +40,7 @@ namespace NDDC_MRMS_Labs.Pages
             }
             else
             {
+                States = helpDb.GetAllStates();
                 return Page();
             }
             

@@ -121,7 +121,7 @@
                                                         <option>Cross Rivers</option>
                                                     </select>*@
                                                     <select class="form-select" asp-for="@Model.Laboratory.State" asp-items="@(new SelectList(Model.States, "StateName", "StateName"))">
-                                                        <option selected="">Select</option>
+                                                        <option selected=""></option>
                                                     </select>
                                                     <span class="text-danger" asp-validation-for="@Model.Laboratory.State"></span>
                                                 </div>
