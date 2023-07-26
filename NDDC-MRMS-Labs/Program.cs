@@ -1,3 +1,4 @@
+using NddcMrmsLabsLibrary.Data.Helper;
 using NddcMrmsLabsLibrary.Data.Labs;
 using NddcMrmsLabsLibrary.Databases;
 
@@ -7,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddTransient<ISqlDataAccess, SqlDataAccess>();
 builder.Services.AddTransient<ILabsData, SQLLabs>();
+builder.Services.AddTransient<IHelperData, SQLHelper>();
 
 var app = builder.Build();
 

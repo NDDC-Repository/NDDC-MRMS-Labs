@@ -105,6 +105,7 @@
                                                 </div>
                                                 <div class="col-lg-9">
                                                     <input asp-for="@Model.Laboratory.Street" class="form-control" placeholder="Enter Street Name and Number">
+                                                    <span class="text-danger" asp-validation-for="@Model.Laboratory.Street"></span>
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
@@ -112,21 +113,27 @@
                                                     <label for="firstNameinput" class="form-label">State</label>
                                                 </div>
                                                 <div class="col-lg-9">
-                                                    <select asp-for="@Model.Laboratory.State" id="ForminputState" class="form-select" data-choices="" data-choices-sorting="true">
-                                                        <option selected="">Choose...</option>
+                                                    @*<select asp-for="@Model.Laboratory.State" id="ForminputState" placeholder="Select" class="form-select" data-choices="" data-choices-sorting="true">
+                                                        <option></option>
                                                         <option>Abia</option>
                                                         <option>Akwa Ibom</option>
                                                         <option>Bayelsa</option>
                                                         <option>Cross Rivers</option>
+                                                    </select>*@
+                                                    <select class="form-select" asp-for="@Model.Laboratory.State" asp-items="@(new SelectList(Model.States, "StateName", "StateName"))">
+                                                        <option selected="">Select</option>
                                                     </select>
+                                                    <span class="text-danger" asp-validation-for="@Model.Laboratory.State"></span>
                                                 </div>
+                                                
                                             </div>
                                             <div class="row mb-3">
                                                 <div class="col-lg-3">
                                                     <label class="form-label">City</label>
                                                 </div>
                                                 <div class="col-lg-9">
-                                                    <input asp-for="@Model.Laboratory.RegistrationNo" class="form-control" placeholder="Enter City">
+                                                    <input asp-for="@Model.Laboratory.City" class="form-control" placeholder="Enter City">
+                                                    <span class="text-danger" asp-validation-for="@Model.Laboratory.City"></span>
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
@@ -154,7 +161,8 @@
                                                     <label class="form-label">Company Phone</label>
                                                 </div>
                                                 <div class="col-lg-9">
-                                                    <input asp-for="@Model.Laboratory.CompanyPhone" class="form-control" placeholder="Enter Post Code">
+                                                    <input asp-for="@Model.Laboratory.CompanyPhone" class="form-control" placeholder="Enter Phone">
+                                                    <span class="text-danger" asp-validation-for="@Model.Laboratory.CompanyPhone"></span>
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
@@ -162,7 +170,8 @@
                                                     <label class="form-label">Company Email</label>
                                                 </div>
                                                 <div class="col-lg-9">
-                                                    <input asp-for="@Model.Laboratory.CompanyEmail" class="form-control" placeholder="Enter Post Code">
+                                                    <input asp-for="@Model.Laboratory.CompanyEmail" class="form-control" placeholder="Enter Email">
+                                                    <span class="text-danger" asp-validation-for="@Model.Laboratory.CompanyEmail"></span>
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
@@ -170,7 +179,7 @@
                                                     <label class="form-label">Company Web Address</label>
                                                 </div>
                                                 <div class="col-lg-9">
-                                                    <input asp-for="@Model.Laboratory.CompanyUrl" class="form-control" placeholder="Enter Post Code">
+                                                    <input asp-for="@Model.Laboratory.CompanyUrl" class="form-control" placeholder="Enter Url">
                                                 </div>
                                             </div>
 
@@ -190,6 +199,7 @@
                                                 </div>
                                                 <div class="col-lg-9">
                                                     <input asp-for="@Model.Laboratory.ContactName1" class="form-control" placeholder="Enter Name">
+                                                    <span class="text-danger" asp-validation-for="@Model.Laboratory.ContactName1"></span>
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
@@ -198,6 +208,7 @@
                                                 </div>
                                                 <div class="col-lg-9">
                                                     <input asp-for="@Model.Laboratory.ContactAddress1" class="form-control" placeholder="Enter Address">
+                                                    <span class="text-danger" asp-validation-for="@Model.Laboratory.ContactAddress1"></span>
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
@@ -206,6 +217,7 @@
                                                 </div>
                                                 <div class="col-lg-9">
                                                     <input asp-for="@Model.Laboratory.ContactPhone1" class="form-control" placeholder="Enter Phone">
+                                                    <span class="text-danger" asp-validation-for="@Model.Laboratory.ContactPhone1"></span>
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
@@ -214,6 +226,7 @@
                                                 </div>
                                                 <div class="col-lg-9">
                                                     <input asp-for="@Model.Laboratory.ContactEmail1" class="form-control" placeholder="Enter Email">
+                                                    <span class="text-danger" asp-validation-for="@Model.Laboratory.ContactEmail1"></span>
                                                 </div>
                                             </div>
 
