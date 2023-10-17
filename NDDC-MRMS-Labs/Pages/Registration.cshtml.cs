@@ -34,7 +34,11 @@ namespace NDDC_MRMS_Labs.Pages
                 Laboratory.CreatedBy = "System";
                 Laboratory.DateCreated = DateTime.Now;
                 Laboratory.Approved = false;
-                labDb.AddLab(Laboratory);
+                int labId = labDb.AddLab(Laboratory);
+
+                string userId = User.Claims.FirstOrDefault(c => c.Type.Contains("id"))?.Value;
+
+                labDb.AddLabUser(labId, userId);
 
                 return RedirectToPage("Success");
             }

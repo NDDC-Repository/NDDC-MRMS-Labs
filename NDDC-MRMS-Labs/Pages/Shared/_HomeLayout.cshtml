@@ -55,11 +55,12 @@
                     </ul>
 
                     <div class="">
-                        <a href="https://mrms.nddc.gov.ng"  class="btn btn-link fw-medium text-decoration-none text-dark">
+                        @*<a href="https://mrms.nddc.gov.ng"  class="btn btn-link fw-medium text-decoration-none text-dark">
                             Sign
                             in
-                        </a>
-                        <a href="Registration" class="btn btn-primary">Register</a>
+                        </a>*@
+                       @* <partial name="_LoginPartial" />*@
+                        <a class="btn btn-primary" asp-area="MicrosoftIdentity" asp-controller="Account" asp-action="SignIn">Sign In</a>
                     </div>
                 </div>
 

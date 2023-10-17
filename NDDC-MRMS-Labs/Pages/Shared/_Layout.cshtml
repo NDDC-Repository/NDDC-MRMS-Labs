@@ -1,51 +1,274 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+﻿@using Microsoft.AspNetCore.Components.Web;
+<!DOCTYPE html>
+<html lang="en" data-layout="vertical" data-topbar="dark" data-sidebar="light" data-sidebar-size="lg" data-sidebar-image="none" data-preloader="disable">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - NDDC_MRMS_Labs</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <title>@ViewData["Title"] - NDDC MRMS</title>
+    @*<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/NDDC_MRMS_Labs.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/WebTemplateTheme.styles.css" asp-append-version="true" />*@
+
+    <base href="~/" />
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="~/images/favicon.ico">
+    <!-- jsvectormap css -->
+    <link href="~/libs/jsvectormap/css/jsvectormap.min.css" rel="stylesheet" type="text/css" />
+
+    <!--Swiper slider css-->
+    <link href="~/libs/swiper/swiper-bundle.min.css" rel="stylesheet" type="text/css" />
+
+    <!-- Layout config Js -->
+    <script src="~/js/layout.js"></script>
+    <!-- Bootstrap Css -->
+    <link href="~/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <!-- Icons Css -->
+    <link href="~/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <!-- App Css-->
+    <link href="~/css/app.min.css" rel="stylesheet" type="text/css" />
+    <!-- custom Css-->
+    <link href="~/css/custom.min.css" rel="stylesheet" type="text/css" />
+    <link href="_content/Syncfusion.Blazor.Themes/bootstrap5.css" rel="stylesheet" />
+    <script src="_content/Syncfusion.Blazor.Core/scripts/syncfusion-blazor.min.js" type="text/javascript"></script>
+
+    <component type="typeof(HeadOutlet)" , render-mode="ServerPrerendered" />
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">NDDC_MRMS_Labs</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
-                        </li>
-                    </ul>
+
+    <div id="layout-wrapper">
+        <header id="page-topbar">
+            <div class="layout-width">
+                <div class="navbar-header">
+                    <div class="d-flex">
+                        <!-- LOGO -->
+                        <div class="navbar-brand-box horizontal-logo">
+                            <a href="index-2.html" class="logo logo-dark">
+                                <span class="logo-sm">
+                                    <img src="assets/images/logo-sm.png" alt="" height="22">
+                                </span>
+                                <span class="logo-lg">
+                                    <img src="assets/images/logo-dark.png" alt="" height="17">
+                                </span>
+                            </a>
+
+                            <a href="index-2.html" class="logo logo-light">
+                                <span class="logo-sm">
+                                    <img src="assets/images/logo-sm.png" alt="" height="22">
+                                </span>
+                                <span class="logo-lg">
+                                    <img src="assets/images/logo-light.png" alt="" height="17">
+                                </span>
+                            </a>
+                        </div>
+
+                        <button type="button" class="btn btn-sm px-3 fs-16 header-item vertical-menu-btn topnav-hamburger" id="topnav-hamburger-icon">
+                            <span class="hamburger-icon">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </span>
+                        </button>
+
+                        <!-- App Search-->
+                        <!-- Stacks - Horizontal -->
+                        @if (User.Identity?.IsAuthenticated == true)
+                        {
+                            <div class="hstack gap-3">
+                                @*<a href="AddPatient" class="btn btn-success btn-label waves-effect waves-light"><i class="ri-check-double-line label-icon align-middle fs-16 me-2"></i> Add Patient</a>*@
+                                @*<div class="bg-light border p-1 px-2">Second item</div>
+                            <div class="bg-light border p-1 px-2">Third item</div>*@
+                                <h3 style="color:white; padding-top:5px">NDDC MRMS - Health Care Provider Application</h3>
+                            </div>
+                        }
+
+                    </div>
+
+                    <div class="d-flex align-items-center">
+                        <!-- User -->
+                        <div class="dropdown ms-sm-3 header-item topbar-user">
+                            <button type="button" class="btn" id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="d-flex align-items-center">
+                                    @*<img class="rounded-circle header-profile-user" src="~/images/users/avatar-1.jpg" alt="Header Avatar">*@
+                                    <i class="ri-user-line"></i>
+                                    <span class="text-start ms-xl-2">
+                                        <span class="d-none d-xl-inline-block ms-1 fw-medium user-name-text">Hello</span>
+                                        <span class="d-none d-xl-block ms-1 fs-12 text-muted user-name-sub-text">Hello @Context.User.Claims.FirstOrDefault(c => c.Type.Contains("givenname"))?.Value</span>
+                                    </span>
+                                </span>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-end">
+                                <!-- item-->
+                                @*<a class="dropdown-item" href="auth-logout-basic.html"><i class="mdi mdi-logout text-muted fs-16 align-middle me-1"></i> <span class="align-middle" data-key="t-logout">Logout</span></a>*@
+                                @if (User.Identity?.IsAuthenticated == true)
+                                {
+                                    <a class="dropdown-item" asp-area="MicrosoftIdentity" asp-controller="Account" asp-action="SignOut"><i class="mdi mdi-logout text-muted fs-16 align-middle me-1"></i> <span class="align-middle" data-key="t-logout">Logout</span></a>
+                                }
+                                else
+                                {
+                                    <a class="dropdown-item" asp-area="MicrosoftIdentity" asp-controller="Account" asp-action="SignIn"><i class="mdi mdi-login text-muted fs-16 align-middle me-1"></i> <span class="align-middle" data-key="t-logout">Login</span></a>
+                                }
+
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+        </header>
+
+        <!-- /.modal -->
+        <!-- ========== App Menu ========== -->
+        <div class="app-menu navbar-menu">
+            <!-- LOGO -->
+            <div class="navbar-brand-box">
+                <!-- Dark Logo-->
+                <a href="index-2.html" class="logo logo-dark">
+                    <span class="logo-sm">
+                        <img src="~/images/nddclogo.png" alt="" height="150" width="220">
+                    </span>
+                    <span class="logo-lg">
+                        <img src="~/images/nddclogo.png" alt="" height="50" width="220">
+                    </span>
+                </a>
+                <!-- Light Logo-->
+                <a href="index-2.html" class="logo logo-light">
+                    <span class="logo-sm">
+                        <img src="~/images/nddclogo.png.gif" alt="" height="150" width="220">
+                    </span>
+                    <span class="logo-lg">
+                        <img src="~/images/nddclogo.png" alt="" height="150" width="220">
+                    </span>
+                </a>
+                <button type="button" class="btn btn-sm p-0 fs-20 header-item float-end btn-vertical-sm-hover" id="vertical-hover">
+                    <i class="ri-record-circle-line"></i>
+                </button>
+            </div>
+
+            @if (User.Identity?.IsAuthenticated == true)
+            {
+                <div id="scrollbar">
+                    <div class="container-fluid">
+
+                        <div id="two-column-menu">
+                        </div>
+                        <ul class="navbar-nav" id="navbar-nav">
+                            <!-- Main Menu -->
+                            <li class="menu-title"><span data-key="t-menu">Main Menu</span></li>
+                           @* <li class="nav-item">
+                                <a class="nav-link menu-link @ViewData["dashboard"]" href="/Dashboard">
+                                    <i data-feather="home" class="icon-dual"></i> <span data-key="t-dashboards">Dashboard</span>
+                                </a>
+                            </li>*@
+                            <li class="nav-item">
+                                <a class="nav-link menu-link @ViewData["Employees"]" href="/Lab/Patient/Search">
+                                    <i data-feather="user" class="icon-dual"></i> <span data-key="t-dashboards">Employee</span>
+                                </a>
+                            </li>
+
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                
+                            }
+                            <!-- Data Manager Menu -->
+                            <li class="menu-title"><i class="ri-more-fill"></i> <span data-key="t-pages">Labs</span></li>
+                            <li class="nav-item">
+                                <a class="nav-link menu-link" href="/Reports/ReportsList">
+                                    <i data-feather="archive" class="icon-dual"></i> <span data-key="t-dashboards">Vitals </span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link menu-link" href="/Reports/ReportsList">
+                                    <i data-feather="archive" class="icon-dual"></i> <span data-key="t-dashboards">Investigations </span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link menu-link" href="/Reports/ReportsList">
+                                    <i data-feather="archive" class="icon-dual"></i> <span data-key="t-dashboards">Medical Reports </span>
+                                </a>
+                            </li>
+
+                          
+
+                        </ul>
+                    </div>
+                    <!-- Sidebar -->
+                </div>
+            }
+
+
+            <div class="sidebar-background"></div>
+        </div>
+        <div class="vertical-overlay"></div>
+        <div class="main-content">
+            <div class="page-content">
+                <div class="container-fluid">
+                    @RenderBody()
+                </div>
+            </div>
+
+
+        </div>
+        <footer class="footer">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-6" style="color:dimgrey">
+                        <script>document.write(new Date().getFullYear())</script> © Niger Delta Development Commission.
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="text-sm-end d-none d-sm-block">
+                            Education Health And Social Services
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2023 - NDDC_MRMS_Labs - <a asp-area="" asp-page="/Privacy">Privacy</a>
-        </div>
-    </footer>
+    <!--start back-to-top-->
+    <!--end back-to-top-->
+    <!--preloader-->
+    @*<footer class="border-top footer text-muted">
+    <div class="container">
+    &copy; 2022 - WebTemplateTheme - <a asp-area="" asp-page="/Privacy">Privacy</a>
+    </div>
+    </footer>*@
 
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    @*<script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>*@
+
+    <!-- JAVASCRIPT -->
+    <script src="~/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/libs/simplebar/simplebar.min.js"></script>
+    <script src="~/libs/node-waves/waves.min.js"></script>
+    <script src="~/libs/feather-icons/feather.min.js"></script>
+    <script src="~/js/pages/plugins/lord-icon-2.1.0.js"></script>
+    <script src="~/js/plugins.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script type="text/javascript" src="libs/choices.js/public/assets/scripts/choices.min.js"></script>
+    <script type="text/javascript" src="libs/flatpickr/flatpickr.min.js"></script>
+
+    <script src="libs/prismjs/prism.js"></script>
+
+    <!-- apexcharts -->
+    <script src="~/libs/apexcharts/apexcharts.min.js"></script>
+
+    <!-- Vector map-->
+    <script src="~/libs/jsvectormap/js/jsvectormap.min.js"></script>
+    <script src="~/libs/jsvectormap/maps/world-merc.js"></script>
+
+    <!--Swiper slider js-->
+    <script src="~/libs/swiper/swiper-bundle.min.js"></script>
+
+    <!-- Dashboard init -->
+    <script src="~/js/pages/dashboard-ecommerce.init.js"></script>
+
+    <script src="libs/gridjs/gridjs.umd.js"></script>
+    <script src="js/pages/gridjs.init.js"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
+    <!-- App js -->
+    <script src="~/js/app.js"></script>
+
+    <script src="_framework/blazor.server.js"></script>
 </body>
 </html>

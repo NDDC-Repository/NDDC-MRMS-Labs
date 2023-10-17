@@ -14,7 +14,8 @@
                 <p class="lead text-muted lh-base">NDDC Health Care Providers Portal For Medical Records Management.</p>
 
                 <div class="d-flex gap-2 justify-content-center mt-4">
-                    <a href="Registration" class="btn btn-success">Register Now <i class="ri-arrow-right-line align-middle ms-1"></i></a>
+                    @*<a href="Registration" class="btn btn-success">Register Now <i class="ri-arrow-right-line align-middle ms-1"></i></a>*@
+                    <a class="btn btn-success" asp-area="MicrosoftIdentity" asp-controller="Account" asp-action="SignIn">Register Now</a>
                     @*<a href="pages-pricing.html" class="btn btn-danger">View Plans <i class="ri-eye-line align-middle ms-1"></i></a>*@
                 </div>
             </div>
