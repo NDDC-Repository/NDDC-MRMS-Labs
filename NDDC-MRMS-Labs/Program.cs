@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Rewrite;
 using Microsoft.Identity.Web;
 using Microsoft.Identity.Web.UI;
+using NddcMrmsLabsLibrary.Data.Employee;
 using NddcMrmsLabsLibrary.Data.Helper;
 using NddcMrmsLabsLibrary.Data.Labs;
 using NddcMrmsLabsLibrary.Databases;
@@ -12,12 +13,14 @@ using NddcMrmsLabsLibrary.Databases;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddServerSideBlazor();
 builder.Services.AddRazorPages();
 builder.Services.AddTransient<ISqlDataAccess, SqlDataAccess>();
 builder.Services.AddTransient<ILabsData, SQLLabs>();
 builder.Services.AddTransient<IHelperData, SQLHelper>();
 builder.Services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
         .AddMicrosoftIdentityWebApp(builder.Configuration.GetSection("AzureADB2C"));
+builder.Services.AddTransient<IEmployeeData, SqlEmployee>();
 
 builder.Services.AddAuthorization(options =>
 {
@@ -69,6 +72,7 @@ app.UseRewriter(
 //});
 
 app.MapRazorPages();
+app.MapBlazorHub();
 app.MapControllers();
 
 app.Run();

@@ -27,7 +27,7 @@ namespace NDDC_MRMS_Labs.Pages
                 {
                     if (labDb.IsLabApproved(userId))
                     {
-                        return RedirectToPage("Lab/Index");
+                        return RedirectToPage("Lab/Patient/Search");
                     }
                     //return Page();
                     return RedirectToPage("Error");

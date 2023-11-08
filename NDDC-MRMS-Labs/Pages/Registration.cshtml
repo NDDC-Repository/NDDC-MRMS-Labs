@@ -13,8 +13,8 @@
                     <div class="bg-soft-primary position-relative">
                         <div class="card-body p-5">
                             <div class="text-center">
-                                <h3 class="fw-semibold">New Laboratory Registration</h3>
-                                <p class="mb-0 text-muted">New Laboratory Registration</p>
+                                <h3 class="fw-semibold">New Test Center Registration</h3>
+                                <p class="mb-0 text-muted">New Test Center Registration</p>
                             </div>
                         </div>
                         <div class="shape">
@@ -46,7 +46,7 @@
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle text-success icon-dual-success icon-xs"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
                                                 </div>
                                                 <div class="flex-grow-1">
-                                                    <h5>Laboratory Info</h5>
+                                                    <h5>Test Center Info</h5>
                                                 </div>
                                             </div>
                                             <div class="col-md-12 mt-4"></div>
@@ -54,7 +54,7 @@
                                             <div class="col-md-12 mt-4"></div>
                                             <div class="row mb-3">
                                                 <div class="col-lg-3">
-                                                    <label  class="form-label">Name of Laboratory</label>
+                                                    <label  class="form-label">Name of Test Center</label>
                                                 </div>
 
                                                 <div class="col-lg-9">
@@ -74,14 +74,13 @@
                                             </div>
                                             <div class="row mb-3">
                                                 <div class="col-lg-3">
-                                                    <label for="firstNameinput" class="form-label">Laboratory Type</label>
+                                                    <label for="firstNameinput" class="form-label">Test Center Type</label>
                                                 </div>
                                                 <div class="col-lg-9">
                                                     <select asp-for="@Model.Laboratory.LabType" id="ForminputState" class="form-select" data-choices="" data-choices-sorting="true">
                                                         <option selected="">Choose...</option>
-                                                        <option>General</option>
-                                                        <option>Specialist</option>
-                                                        <option>Other</option>
+                                                        <option>Hospital</option>
+                                                        <option>Diagnostic Center</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -92,7 +91,7 @@
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle text-success icon-dual-success icon-xs"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
                                                 </div>
                                                 <div class="flex-grow-1">
-                                                    <h5>Laboratory Address</h5>
+                                                    <h5>Office Location</h5>
                                                 </div>
                                             </div>
                                             <div class="col-md-12 mt-4"></div>

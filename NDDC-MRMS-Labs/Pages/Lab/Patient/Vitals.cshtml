@@ -50,12 +50,13 @@
                                                 <div><i class="ri-building-line align-bottom me-1"></i> <div class="badge rounded-pill bg-primary fs-12">Vitals</div></div>
                                                 @* <div><i class="ri-building-line align-bottom me-1"></i> <a href="#">Vitals</a></div> *@
                                                 <div class="vr"></div>
-                                                <div><span class="fw-medium"> <a href="#">Investigations</a></span></div>
+                                                <div><span class="fw-medium"> <a href="Lab/Patient/Investigations">Investigations</a></span></div>
                                                 <div class="vr"></div>
                                                 <div><span class="fw-medium"><a href="#">Medical Report</a></span></div>
                                                 <div class="vr"></div>
-                                                <div class="badge rounded-pill bg-primary fs-12">New</div>
-                                                <div class="badge rounded-pill bg-success fs-12">High</div>
+                                                @* <div class="badge rounded-pill bg-primary fs-12">New</div>
+                                                <div class="badge rounded-pill bg-success fs-12">High</div> *@
+                                                @* <button type="button" class="btn rounded-pill btn-success waves-effect waves-light">Add Vitals</button> *@
                                             </div>
                                         </div>
                                     </div>
@@ -91,3 +92,9 @@
     <!-- end row -->
     <!-- end row -->
 </div>
+
+<component type="typeof(NDDC_MRMS_Labs.MyComponents.Vitals)" render-mode="ServerPrerendered" />
+
+
+
+                                   

@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "{empId:int?}"
 @model NDDC_MRMS_Labs.Pages.Lab.Patient.ProfileModel
 @{
 }
@@ -30,7 +30,7 @@
                                                 <div class="vr"></div>
                                                 <div><i class="ri-building-line align-bottom me-1"></i> <a href="Lab/Patient/Vitals">Vitals</a></div>
                                                 <div class="vr"></div>
-                                                <div><span class="fw-medium"> <a href="#">Investigations</a></span></div>
+                                                <div><span class="fw-medium"> <a href="Lab/Patient/Investigations">Investigations</a></span></div>
                                                 <div class="vr"></div>
                                                 <div><span class="fw-medium"><a href="#">Medical Report</a></span></div>
                                                 <div class="vr"></div>
@@ -83,27 +83,27 @@
                         <tbody>
                             <tr>
                                 <th class="ps-0" scope="row">First Name :</th>
-                                <td class="text-muted">Anna Adame</td>
+                                <td class="text-muted">@Model.EmployeeDetails.FirstName</td>
                                 <th class="ps-0" scope="row">Last Name :</th>
-                                <td class="text-muted">Anna Adame</td>
-                                <th class="ps-0" scope="row">Other Name(s) :</th>
-                                <td class="text-muted">Anna Adame</td>
+                                <td class="text-muted">@Model.EmployeeDetails.LastName</td>
+                                <th class="ps-0" scope="row">Service Status :</th>
+                                <td class="text-muted">Active</td>
                             </tr>
                             <tr>
                                 <th class="ps-0" scope="row">Gender :</th>
-                                <td class="text-muted">Male</td>
+                                <td class="text-muted">@Model.EmployeeDetails.Gender</td>
                                 <th class="ps-0" scope="row">Marital Status :</th>
-                                <td class="text-muted">Married</td>
+                                <td class="text-muted">@Model.EmployeeDetails.MaritalStatus</td>
                                 <th class="ps-0" scope="row">Age :</th>
-                                <td class="text-muted">38</td>
+                                <td class="text-muted">N/A</td>
                             </tr>
                             <tr>
-                                <th class="ps-0" scope="row">Address :</th>
-                                <td class="text-muted">Male</td>
+                                <th class="ps-0" scope="row">Location :</th>
+                                <td class="text-muted">@Model.EmployeeDetails.PayPoint</td>
                                 <th class="ps-0" scope="row">Phone :</th>
-                                <td class="text-muted">+(1) 987 6543</td>
+                                <td class="text-muted">N/A</td>
                                 <th class="ps-0" scope="row">Email :</th>
-                                <td class="text-muted">emai@email.com</td>
+                                <td class="text-muted">@Model.EmployeeDetails.Email</td>
                             </tr>
 
 

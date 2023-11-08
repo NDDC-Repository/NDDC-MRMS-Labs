@@ -1,0 +1,133 @@
+﻿
+
+
+@if (UpdateToggle == false)
+{
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <span class="float-end"><button type="button" @onclick="ToggleUpdate" class="btn rounded-pill btn-success waves-effect waves-light">Update</button></span>
+                    <h4 class="card-title mb-0 flex-grow-1">Medical Bio</h4>
+                </div><!-- end card header -->
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-borderless mb-0">
+                            <tbody>
+                                <tr>
+                                    <th class="ps-0" scope="row">height :</th>
+                                    <td class="text-muted">6ft</td>
+                                </tr>
+                                <tr>
+                                    <th class="ps-0" scope="row">Blood Group :</th>
+                                    <td class="text-muted">0+</td>
+                                </tr>
+                                <tr>
+                                    <th class="ps-0" scope="row">Genotype :</th>
+                                    <td class="text-muted">AA</td>
+                                </tr>
+                                <tr>
+                                    <th class="ps-0" scope="row">Weight :</th>
+                                    <td class="text-muted">83Kg</td>
+                                </tr>
+                                <tr>
+                                    <th class="ps-0" scope="row">Height :</th>
+                                    <td class="text-muted">5.3ft</td>
+                                </tr>
+                                <tr>
+                                    <th class="ps-0" scope="row">BMI :</th>
+                                    <td class="text-muted">15.7</td>
+                                </tr>
+                                <tr>
+                                    <th class="ps-0" scope="row">Disabilities :</th>
+                                    <td class="text-muted">None</td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--end col-->
+    </div>
+}
+else
+{
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <span class="float-end"><button type="button" @onclick="SaveBio" class="btn rounded-pill btn-success waves-effect waves-light">Save</button></span>
+                    <h4 class="card-title mb-0 flex-grow-1">Medical Bio</h4>
+                </div><!-- end card header -->
+                <div class="card-body">
+                    <form method="post">
+                        <div class="row mb-3">
+                            <div class="col-lg-3">
+                                <label class="form-label">Height</label>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <input class="form-control" placeholder="Enter Hieght">
+                            </div>
+                        </div>
+
+
+                        <div class="row mb-3">
+                            <div class="col-lg-3">
+                                <label class="form-label">Blood Type</label>
+                            </div>
+                            <div class="col-lg-3">
+                                <input class="form-control" placeholder="Enter Blood Type">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-lg-3">
+                                <label class="form-label">Blood Group</label>
+                            </div>
+                            <div class="col-lg-3">
+                                <input class="form-control" placeholder="Enter Blood Group">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-lg-3">
+                                <label class="form-label">Disabilities</label>
+                            </div>
+                            <div class="col-lg-3">
+                                <select id="ForminputState" class="form-select" data-choices="" data-choices-sorting="true">
+                                    <option selected="">Choose...</option>
+                                    <option>Yes</option>
+                                    <option>No</option>
+                                </select>
+                            </div>
+                        </div>
+                       @*  <div class="text-end">
+                            <button type="submit" class="btn btn-primary">Add Bank</button>
+                        </div> *@
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!--end col-->
+    </div>
+}
+
+
+@code {
+
+    public string TestProp { get; set; }
+    public bool UpdateToggle { get; set; }
+
+    private void ToggleUpdate()
+    {
+        UpdateToggle = true;
+        TestProp = "Somthing New";
+    }
+
+    private void SaveBio()
+    {
+        UpdateToggle = false;
+    }
+
+}
