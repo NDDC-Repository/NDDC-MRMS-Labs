@@ -10,6 +10,7 @@ namespace NDDC_MRMS_Labs.Pages.Lab.Patient
 
         [BindProperty]
         public string EmployeeCode { get; set; }
+        public int EmpId { get; set; }
 
         public SearchModel(IEmployeeData empDb)
         {
@@ -20,8 +21,8 @@ namespace NDDC_MRMS_Labs.Pages.Lab.Patient
         }
         public IActionResult OnPost()
         {
-            int id = empDb.GetEmpId(EmployeeCode);
-            return RedirectToPage($"Profile", new {empId = id} );
+            EmpId = empDb.GetEmpId(EmployeeCode);
+            return RedirectToPage($"Profile", new {empId = EmpId} );
         }
     }
 }
