@@ -23,7 +23,7 @@
                                     <div class="col-md">
                                         <div>
                                             <h4 class="fw-bold">Employee Full Names</h4>
-                                            <div class="hstack gap-3 flex-wrap">
+                                            @*<div class="hstack gap-3 flex-wrap">
                                                 <div><i class="ri-building-line align-bottom me-1"></i> <div class="badge rounded-pill bg-primary fs-12">Staff Bio</div></div>
                                                 <div class="vr"></div>
                                                 <div><i class="ri-building-line align-bottom me-1"></i> <a href="Lab/Patient/MedicalBio/@Model.EmpId">Medical Bio</a></div>
@@ -34,6 +34,38 @@
                                                 <div class="vr"></div>
                                                 <div><span class="fw-medium"><a href="#">Medical Report</a></span></div>
                                                 <div class="vr"></div>
+                                                <div class="badge rounded-pill bg-primary fs-12">New</div>
+                                                <div class="badge rounded-pill bg-success fs-12">High</div>
+                                            </div>*@
+                                            <div class="hstack gap-3 flex-wrap align-items-center">
+                                                <!--Tab List-->
+                                                <ul class="nav nav-tabs" role="tablist">
+                                                    <li class="nav-item" role="presentation">
+                                                        <a class="nav-link active" data-bs-toggle="tab" href="#profile" role="tab" aria-selected="true">
+                                                           <i class="ri-building-line align-bottom me-1"></i> Profile
+                                                        </a>
+                                                    </li>
+                                                    <li class="nav-item" role="presentation">
+                                                        <a class="nav-link" data-bs-toggle="tab" href="#medBio" role="tab" aria-selected="false" tabindex="-1">
+                                                           <i class="ri-building-line align-bottom me-1"></i> Medical Bio
+                                                        </a>
+                                                    </li>
+                                                    <li class="nav-item" role="presentation">
+                                                        <a class="nav-link" data-bs-toggle="tab" href="#vitals" role="tab" aria-selected="false" tabindex="-1">
+                                                           <i class="ri-building-line align-bottom me-1"></i> Vitals
+                                                        </a>
+                                                    </li>
+                                                    <li class="nav-item" role="presentation">
+                                                        <a class="nav-link" data-bs-toggle="tab" href="#investigations" role="tab" aria-selected="false" tabindex="-1">
+                                                           <i class="ri-building-line align-bottom me-1"></i> Investigations
+                                                        </a>
+                                                    </li>
+                                                    <li class="nav-item" role="presentation">
+                                                        <a class="nav-link" data-bs-toggle="tab" href="#medReport" role="tab" aria-selected="false" tabindex="-1">
+                                                           <i class="ri-building-line align-bottom me-1"></i> Medical Report
+                                                        </a>
+                                                    </li>
+                                                </ul>
                                                 <div class="badge rounded-pill bg-primary fs-12">New</div>
                                                 <div class="badge rounded-pill bg-success fs-12">High</div>
                                             </div>
@@ -73,7 +105,9 @@
     <!-- end row -->
 </div>
 
-<div class="row">
+<!--Profile-->
+
+@*<div class="row">
     <div class="col-md-12">
         <div class="card">
             <div class="card-body">
@@ -112,5 +146,72 @@
                 </div>
             </div><!-- end card body -->
         </div>
+    </div>
+</div>*@
+
+<!--Tab Panes-->
+<div class="tab-content  text-muted">
+    <div class="tab-pane active show" id="profile" role="tabpanel">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title mb-3">Info</h5>
+                        <div class="table-responsive">
+                            <table class="table table-borderless mb-0">
+                                <tbody>
+                                    <tr>
+                                        <th class="ps-0" scope="row">First Name :</th>
+                                        <td class="text-muted">@Model.EmployeeDetails.FirstName</td>
+                                        <th class="ps-0" scope="row">Last Name :</th>
+                                        <td class="text-muted">@Model.EmployeeDetails.LastName</td>
+                                        <th class="ps-0" scope="row">Service Status :</th>
+                                        <td class="text-muted">Active</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="ps-0" scope="row">Gender :</th>
+                                        <td class="text-muted">@Model.EmployeeDetails.Gender</td>
+                                        <th class="ps-0" scope="row">Marital Status :</th>
+                                        <td class="text-muted">@Model.EmployeeDetails.MaritalStatus</td>
+                                        <th class="ps-0" scope="row">Age :</th>
+                                        <td class="text-muted">N/A</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="ps-0" scope="row">Location :</th>
+                                        <td class="text-muted">@Model.EmployeeDetails.PayPoint</td>
+                                        <th class="ps-0" scope="row">Phone :</th>
+                                        <td class="text-muted">N/A</td>
+                                        <th class="ps-0" scope="row">Email :</th>
+                                        <td class="text-muted">@Model.EmployeeDetails.Email</td>
+                                    </tr>
+
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div><!-- end card body -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane" id="medBio" role="tabpanel">
+        <component type="typeof(NDDC_MRMS_Labs.MyComponents.MedicalBio)" render-mode="ServerPrerendered" />
+    </div>
+    <div class="tab-pane" id="vitals" role="tabpanel">
+        <component type="typeof(NDDC_MRMS_Labs.MyComponents.Vitals)" render-mode="ServerPrerendered" />
+    </div>
+    <div class="tab-pane" id="investigations" role="tabpanel">
+        <component type="typeof(NDDC_MRMS_Labs.MyComponents.Investigations)" render-mode="ServerPrerendered" />
+    </div>
+    <div class="tab-pane" id="medReport" role="tabpanel">
+        <h6>Settings</h6>
+        <p class="mb-0">
+            Trust fund seitan letterpress, keytar raw denim keffiyeh etsy
+            art party before they sold out master cleanse gluten-free squid
+            scenester freegan cosby sweater. Fanny pack portland seitan DIY,
+            art party locavore wolf cliche high life echo park Austin. Cred
+            vinyl keffiyeh DIY salvia PBR, banh mi before they sold out
+            farm-to-table VHS.
+        </p>
     </div>
 </div>
