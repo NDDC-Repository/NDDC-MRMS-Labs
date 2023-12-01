@@ -5,10 +5,9 @@ using Microsoft.Identity.Web.UI;
 using NddcMrmsLabsLibrary.Data.Employee;
 using NddcMrmsLabsLibrary.Data.Helper;
 using NddcMrmsLabsLibrary.Data.Labs;
+using NddcMrmsLabsLibrary.Data.Patient;
 using NddcMrmsLabsLibrary.Databases;
-
-
-
+using Syncfusion.Blazor;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +20,8 @@ builder.Services.AddTransient<IHelperData, SQLHelper>();
 builder.Services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
         .AddMicrosoftIdentityWebApp(builder.Configuration.GetSection("AzureADB2C"));
 builder.Services.AddTransient<IEmployeeData, SqlEmployee>();
+builder.Services.AddTransient<IPatientData, SqlPatient>();
+builder.Services.AddSyncfusionBlazor();
 
 builder.Services.AddAuthorization(options =>
 {
@@ -35,6 +36,7 @@ builder.Services.AddRazorPages(options => {
 .AddMicrosoftIdentityUI();
 
 var app = builder.Build();
+Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Mjk1MzIyMEAzMjMzMmUzMDJlMzBJZzd0bW5GTWtrL2ZoeURxdmFGS2tDY2VoWThQUU8rUkJobC8yK0thRzhvPQ==");
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

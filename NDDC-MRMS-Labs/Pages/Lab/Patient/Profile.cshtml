@@ -22,7 +22,7 @@
                                     </div>
                                     <div class="col-md">
                                         <div>
-                                            <h4 class="fw-bold">Employee Full Names</h4>
+                                            <h4 class="fw-bold">@Model.EmployeeDetails.FirstName @Model.EmployeeDetails.LastName</h4>
                                             @*<div class="hstack gap-3 flex-wrap">
                                                 <div><i class="ri-building-line align-bottom me-1"></i> <div class="badge rounded-pill bg-primary fs-12">Staff Bio</div></div>
                                                 <div class="vr"></div>
@@ -195,13 +195,13 @@
         </div>
     </div>
     <div class="tab-pane" id="medBio" role="tabpanel">
-        <component type="typeof(NDDC_MRMS_Labs.MyComponents.MedicalBio)" render-mode="ServerPrerendered" />
+        <component type="typeof(NDDC_MRMS_Labs.MyComponents.MedicalBio)" param-EmpId="@Model.EmpId" render-mode="ServerPrerendered" />
     </div>
     <div class="tab-pane" id="vitals" role="tabpanel">
-        <component type="typeof(NDDC_MRMS_Labs.MyComponents.Vitals)" render-mode="ServerPrerendered" />
+        <component type="typeof(NDDC_MRMS_Labs.MyComponents.Vitals)" param-EmpId="@Model.EmpId" render-mode="ServerPrerendered" />
     </div>
     <div class="tab-pane" id="investigations" role="tabpanel">
-        <component type="typeof(NDDC_MRMS_Labs.MyComponents.Investigations)" render-mode="ServerPrerendered" />
+        <component type="typeof(NDDC_MRMS_Labs.MyComponents.Investigations)" param-EmpId="@Model.EmpId" render-mode="ServerPrerendered" />
     </div>
     <div class="tab-pane" id="medReport" role="tabpanel">
         <h6>Settings</h6>
@@ -215,3 +215,7 @@
         </p>
     </div>
 </div>
+
+    @section Scripts {
+    <script src="~/libs/cleave.js/cleave.min.js"></script>
+}

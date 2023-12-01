@@ -1,4 +1,20 @@
-﻿
+﻿@using Syncfusion.Blazor.Notifications;
+
+@inject IPatientData patientDb
+
+<SfToast ID="toast_success" @ref="ToastObj" Title="Update Success" Timeout="5000" Icon="e-meeting">
+   
+    <ToastPosition X="Right" Y="Top"></ToastPosition>
+    <ToastTemplates>
+        <Template>
+            
+            <div class="alert alert-success alert-dismissible alert-solid alert-label-icon fade show" role="alert">
+                <i class="ri-notification-off-line label-icon"></i><strong>Saved Successfully!</strong>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </Template>
+    </ToastTemplates>
+</SfToast>
 
 
 @if (UpdateToggle == false)
@@ -14,33 +30,33 @@
                     <div class="table-responsive">
                         <table class="table table-borderless mb-0">
                             <tbody>
-                                <tr>
-                                    <th class="ps-0" scope="row">height :</th>
-                                    <td class="text-muted">6ft</td>
-                                </tr>
+                                @* <tr>
+                                    <th class="ps-0" scope="row">Blood Group :</th>
+                                    <td class="text-muted">@MyMedicalBio.BloodGroup</td>
+                                </tr> *@
                                 <tr>
                                     <th class="ps-0" scope="row">Blood Group :</th>
-                                    <td class="text-muted">0+</td>
+                                    <td class="text-muted">@MyMedicalBio.BloodGroup</td>
                                 </tr>
                                 <tr>
                                     <th class="ps-0" scope="row">Genotype :</th>
-                                    <td class="text-muted">AA</td>
+                                    <td class="text-muted">@MyMedicalBio.Genotype</td>
                                 </tr>
                                 <tr>
                                     <th class="ps-0" scope="row">Weight :</th>
-                                    <td class="text-muted">83Kg</td>
+                                    <td class="text-muted">@MyMedicalBio.Weight</td>
                                 </tr>
                                 <tr>
                                     <th class="ps-0" scope="row">Height :</th>
-                                    <td class="text-muted">5.3ft</td>
+                                    <td class="text-muted">@MyMedicalBio.Height</td>
                                 </tr>
                                 <tr>
                                     <th class="ps-0" scope="row">BMI :</th>
-                                    <td class="text-muted">15.7</td>
+                                    <td class="text-muted">@MyMedicalBio.BMI.ToString("N2")</td>
                                 </tr>
                                 <tr>
                                     <th class="ps-0" scope="row">Disabilities :</th>
-                                    <td class="text-muted">None</td>
+                                    <td class="text-muted">@MyMedicalBio.Disabilities</td>
                                 </tr>
 
                             </tbody>
@@ -58,6 +74,8 @@ else
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
+
+                    <span class="float-end mx-2"><button type="button" @onclick="CancelSave" class="btn rounded-pill btn-secondary waves-effect waves-light">Cancel</button></span>
                     <span class="float-end"><button type="button" @onclick="SaveBio" class="btn rounded-pill btn-success waves-effect waves-light">Save</button></span>
                     <h4 class="card-title mb-0 flex-grow-1">Medical Bio</h4>
                 </div><!-- end card header -->
@@ -65,29 +83,64 @@ else
                     <form method="post">
                         <div class="row mb-3">
                             <div class="col-lg-3">
-                                <label class="form-label">Height</label>
-                            </div>
-
-                            <div class="col-lg-3">
-                                <input class="form-control" placeholder="Enter Hieght">
-                            </div>
-                        </div>
-
-
-                        <div class="row mb-3">
-                            <div class="col-lg-3">
-                                <label class="form-label">Blood Type</label>
-                            </div>
-                            <div class="col-lg-3">
-                                <input class="form-control" placeholder="Enter Blood Type">
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col-lg-3">
                                 <label class="form-label">Blood Group</label>
                             </div>
                             <div class="col-lg-3">
-                                <input class="form-control" placeholder="Enter Blood Group">
+                                @* <input class="form-control" @bind="MyMedicalBio.BloodGroup" placeholder="Enter Blood Type"> *@
+                                <select class="form-select" @bind="MyMedicalBio.BloodGroup">
+                                    <option value="None">None</option>
+                                    <option value="A">A</option>
+                                    <option value="B">B</option>
+                                    <option value="AB">AB</option>
+                                    <option value="O">O</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-lg-3">
+                                <label class="form-label">Genotype</label>
+                            </div>
+                            <div class="col-lg-3">
+                                @* <input class="form-control" @bind="MyMedicalBio.Genotype" placeholder="Enter Blood Group"> *@
+                                <select class="form-select" @bind="MyMedicalBio.Genotype">
+                                    <option value="None">None</option>
+                                    <option value="AA">AA</option>
+                                    <option value="AS">AS</option>
+                                    <option value="AC">AC</option>
+                                    <option value="SS">SS</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-lg-3">
+                                <label class="form-label">Height</label>
+                            </div>
+
+                            <div class="col-lg-1">
+                                <input id="cleave-numeral" class="form-control" @bind="@MyMedicalBio.Height" @onfocusout="CalculateBMI" placeholder="Enter Hieght">
+                            </div>
+                            <div class="col-lg-2">
+                                <label class="form-label">Unit - Meters(m)</label>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-lg-3">
+                                <label class="form-label">Weight</label>
+                            </div>
+                            <div class="col-lg-1">
+                                <input class="form-control" @bind="MyMedicalBio.Weight" @onfocusout="CalculateBMI" placeholder="Enter Blood Group">
+                            </div>
+                            <div class="col-lg-2">
+                                <label class="form-label">Unit - Kilograms(kg)</label>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-lg-3">
+                                <label class="form-label">BMI</label>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <input class="form-control" @bind="@MyMedicalBio.BMI" disabled="true" placeholder="Enter Hieght">
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -95,11 +148,13 @@ else
                                 <label class="form-label">Disabilities</label>
                             </div>
                             <div class="col-lg-3">
-                                <select id="ForminputState" class="form-select" data-choices="" data-choices-sorting="true">
-                                    <option selected="">Choose...</option>
-                                    <option>Yes</option>
-                                    <option>No</option>
-                                </select>
+                               @*  <select @bind="MyMedicalBio.Disabilities" class="form-select">
+                                    <option selected-disabled="true">Choose...</option>
+                                    <option value="1">Yes</option>
+                                    <option value="0">No</option>
+                                </select> *@
+                                <input class="form-check-input" @bind="MyMedicalBio.Disabilities" type="checkbox" value="" id="flexCheckDefault">
+                                @* <InputCheckbox @bind-Value="@MyMedicalBio.Disabilities"></InputCheckbox> *@
                             </div>
                         </div>
                        @*  <div class="text-end">
@@ -116,8 +171,26 @@ else
 
 @code {
 
+    SfToast ToastObj;
+    private string ToastPosition = "Center";
+    private string ToastContent = "Successfully Updated Medical Bio";
+
+    public MyMedicalBioModel MyMedicalBio = new();
+    [Parameter]
+    public int EmpId { get; set; }
+
     public string TestProp { get; set; }
     public bool UpdateToggle { get; set; }
+
+    protected override void OnInitialized()
+    {
+        if (patientDb.GetMedicalBio(EmpId) is not null)
+        {
+            MyMedicalBio = patientDb.GetMedicalBio(EmpId);
+        }
+
+
+    }
 
     private void ToggleUpdate()
     {
@@ -125,9 +198,25 @@ else
         TestProp = "Somthing New";
     }
 
-    private void SaveBio()
+    private async Task SaveBio()
+    {
+        MyMedicalBio.EmpId = EmpId;
+        MyMedicalBio.DateAdded = DateTime.Now;
+        MyMedicalBio.AddedBy = "Admin";
+
+        patientDb.AddMedicalBio(MyMedicalBio);
+        UpdateToggle = false;
+
+        await this.ToastObj.ShowAsync();
+    }
+    private void CancelSave()
     {
         UpdateToggle = false;
+    }
+    private void CalculateBMI()
+    {
+        double height = MyMedicalBio.Height * MyMedicalBio.Height;
+        MyMedicalBio.BMI = MyMedicalBio.Weight / height;
     }
 
 }

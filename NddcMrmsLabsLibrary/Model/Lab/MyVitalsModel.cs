@@ -8,7 +8,9 @@ namespace NddcMrmsLabsLibrary.Model.Lab
 {
     public class MyVitalsModel
     {
+        public int SrNo { get; set; }
         public int Id { get; set; }
+        public int EmpId { get; set; }
         public string EmployeeCode { get; set; }
         public int Temp { get; set; }
         public int Pulse { get; set; }

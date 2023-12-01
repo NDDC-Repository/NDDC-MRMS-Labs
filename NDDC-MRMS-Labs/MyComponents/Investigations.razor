@@ -1,134 +1,9 @@
 ﻿
+@inject IPatientData patientDb
 
 
-@if (ViewStatus == false && AddResultsViewStatus == false)
-{
-    
-    <div class="card">
-        <div class="card-header">
-            <span class="float-end"><button type="button" @onclick="ToggleView" class="btn rounded-pill btn-success waves-effect waves-light">New Investigation</button></span>
-            <h6 class="card-title mb-0">Investigations History</h6>
-        </div>
-        <div class="card-body">
-            <div class="table-responsive table-card">
-                <table class="table table-nowrap table-striped-columns mb-0">
-                    <thead class="table-light">
-                        <tr>
-                            <th scope="col">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="cardtableCheck">
-                                    <label class="form-check-label" for="cardtableCheck"></label>
-                                </div>
-                            </th>
-                            <th scope="col">Case Number</th>
-                            <th scope="col">Test Description</th>
-                            <th scope="col">Conducted By</th>
-                            <th scope="col">Date Conducted</th>
-                            <th scope="col">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="cardtableCheck01">
-                                    <label class="form-check-label" for="cardtableCheck01"></label>
-                                </div>
-                            </td>
-                            <td><a href="#" class="fw-semibold">#VL2110</a></td>
-                            <td>Medical Checkup</td>
-                            <td>James Ruuter</td>
-                            <td><span>07 Oct, 2023</span></td>
-                            <td>
-                                <button type="button" @onclick="ViewAddResults" class="btn btn-sm btn-primary">Add Results</button>
-                                <button type="button" class="btn btn-sm btn-light">Details</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="cardtableCheck01">
-                                    <label class="form-check-label" for="cardtableCheck01"></label>
-                                </div>
-                            </td>
-                            <td><a href="#" class="fw-semibold">#VL2610</a></td>
-                            <td>Medical Checkup</td>
-                            <td>James Ruuter</td>
-                            <td><span>07 Oct, 2023</span></td>
-                            <td>
-                                <button type="button" class="btn btn-sm btn-primary">Add Results</button>
-                                <button type="button" class="btn btn-sm btn-light">Details</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-}
-else if (ViewStatus == true && AddResultsViewStatus == false)
-{
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="card">
-                <div class="card-header">
-                    <span class="float-end"><button type="button" @onclick="SaveVitals" class="btn rounded-pill btn-success waves-effect waves-light">Save</button></span>
-                    <h4 class="card-title mb-0 flex-grow-1">Test Results</h4>
-                </div><!-- end card header -->
-                <div class="card-body">
-                    <form method="post">
-                        <div class="row mb-3">
-                            <div class="col-lg-3">
-                                <label class="form-label">Test Description</label>
-                            </div>
 
-                            <div class="col-lg-6">
-                                <input class="form-control" placeholder="">
-                            </div>
-                        </div>
-
-
-                        <div class="row mb-3">
-                            <div class="col-lg-3">
-                                <label class="form-label">Conducted By</label>
-                            </div>
-                            <div class="col-lg-6">
-                                <input class="form-control" placeholder="">
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col-lg-3">
-                                <label class="form-label">Date Conducted</label>
-                            </div>
-                            <div class="col-lg-6">
-                                <input type="date" class="form-control" id="exampleInputdate">
-                            </div>
-                        </div>
-                        
-                        @*  <div class="row mb-3">
-                    <div class="col-lg-3">
-                    <label class="form-label">Disabilities</label>
-                    </div>
-                    <div class="col-lg-3">
-                    <select id="ForminputState" class="form-select" data-choices="" data-choices-sorting="true">
-                    <option selected="">Choose...</option>
-                    <option>Yes</option>
-                    <option>No</option>
-                    </select>
-                    </div>
-                    </div> *@
-                        @*  <div class="text-end">
-                    <button type="submit" class="btn btn-primary">Add Bank</button>
-                    </div> *@
-                    </form>
-                </div>
-            </div>
-        </div>
-        <!--end col-->
-    </div>
-}
-
-@if (AddResultsViewStatus == true)
+@if (AddTestResultToggle == false)
 {
     <div class="card">
         <div class="card-header">
@@ -140,13 +15,8 @@ else if (ViewStatus == true && AddResultsViewStatus == false)
                 <table class="table table-nowrap table-striped-columns mb-0">
                     <thead class="table-light">
                         <tr>
-                            <th scope="col">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="cardtableCheck">
-                                    <label class="form-check-label" for="cardtableCheck"></label>
-                                </div>
-                            </th>
-                            <th scope="col">Case Number</th>
+                           
+                            <th scope="col">S/N</th>
                             <th scope="col">Process Name</th>
                             <th scope="col">Test Result</th>
                             <th scope="col">Result Unit</th>
@@ -155,40 +25,22 @@ else if (ViewStatus == true && AddResultsViewStatus == false)
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                           @*  <td>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="cardtableCheck01">
-                                    <label class="form-check-label" for="cardtableCheck01"></label>
-                                </div>
-                            </td> *@
-                            <td><a href="#" class="fw-semibold">#VL2110</a></td>
-                            <td>Blood Test</td>
-                            <td>2.0</td>
-                            <td><span>Mg</span></td>
-                            <td><span>4.0</span></td>
-                            <td><span>7th Oct, 2023</span></td>
-                            <td>
-                                <button type="button" class="btn btn-sm btn-light">Details</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            @*  <td>
-                        <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="cardtableCheck01">
-                        <label class="form-check-label" for="cardtableCheck01"></label>
-                        </div>
-                        </td> *@
-                            <td><a href="#" class="fw-semibold">#VL2110</a></td>
-                            <td>Hermatology</td>
-                            <td>2.0</td>
-                            <td><span>Mg</span></td>
-                            <td><span>4.0</span></td>
-                            <td><span>7th Oct, 2023</span></td>
-                            <td>
-                                <button type="button" class="btn btn-sm btn-light">Details</button>
-                            </td>
-                        </tr>
+                        @foreach (var item in InvestigationList)
+                        {
+                            <tr>
+
+                                <td><a href="#" class="fw-semibold">@item.SrNo.</a></td>
+                                <td>@item.ExaminationType</td>
+                                <td>@item.TestResult</td>
+                                <td><span>@item.ResultUnit</span></td>
+                                <td><span>@item.RefRange</span></td>
+                                <td><span>@item.DateConducted</span></td>
+                                <td>
+                                    <button type="button" class="btn btn-sm btn-light">Details</button>
+                                </td>
+                            </tr>
+                        }
+                        
                     </tbody>
                 </table>
             </div>
@@ -202,23 +54,41 @@ else if (ViewStatus == true && AddResultsViewStatus == false)
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <span class="float-end"><button type="button" @onclick="SaveVitals" class="btn rounded-pill btn-success waves-effect waves-light">Save</button></span>
+                    <span class="float-end"><button type="button" @onclick="SaveInvestigation" class="btn rounded-pill btn-success waves-effect waves-light">Save</button></span>
                     <h4 class="card-title mb-0 flex-grow-1">Test Results</h4>
                 </div><!-- end card header -->
                 <div class="card-body">
                     <form method="post">
                         <div class="row mb-3">
                             <div class="col-lg-3">
+                                <label class="form-label">Medical Examination Year</label>
+                            </div>
+                            <div class="col-lg-6">
+                                <select id="ForminputState" @bind="Investigation.ExaminationYear" class="form-select" data-choices="" data-choices-sorting="true">
+                                    <option Value="0">Select...</option>
+                                    <option Value="2021">2021</option>
+                                    <option Value="2022">2022</option>
+                                    <option Value="2023">2023</option>
+                                    <option Value="2024">2024</option>
+                                    <option Value="2025">2025</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-lg-3">
                                 <label class="form-label">Process Category</label>
                             </div>
                             <div class="col-lg-6">
-                                <select id="ForminputState" class="form-select" data-choices="" data-choices-sorting="true">
-                                    <option selected="">Select...</option>
-                                    <option>Opthamolgical</option>
-                                    <option>Hermatology</option>
-                                    <option>Lipid Panel</option>
-                                    <option>Complete Blood Count</option>
-                                    <option>Urine Analysis</option>
+                                @* This bind:event helps to distract the conflict between bind and onchange to allow the onchange event fire *@
+                                <select class="form-select" @bind="ItemId" @bind:event="oninput" @onchange="FillExamType">
+                                    <option value="0">Choose...</option>
+                                    @if (ExamCategories != null)
+                                    {
+                                        @foreach (var item in ExamCategories)
+                                        {
+                                            <option value="@item.Id">@item.ExaminationCategory</option>
+                                        }
+                                    }
                                 </select>
                             </div>
                         </div>
@@ -227,12 +97,15 @@ else if (ViewStatus == true && AddResultsViewStatus == false)
                                 <label class="form-label">Process Name</label>
                             </div>
                             <div class="col-lg-6">
-                                <select id="ForminputState" class="form-select" data-choices="" data-choices-sorting="true">
-                                    <option selected="">Select...</option>
-                                    <option>Computerized Visual Field</option>
-                                    <option>Fundocopy</option>
-                                    <option>Optical Coherence</option>
-                                    <option>Refraction</option>
+                                <select class="form-select" @bind="Investigation.ExaminationTypeId">
+                                    <option value="0">Choose...</option>
+                                    @if (ExamTypes != null)
+                                    {
+                                        @foreach (var item in ExamTypes)
+                                        {
+                                            <option value="@item.Id">@item.ExaminationType</option>
+                                        }
+                                    }
                                 </select>
                             </div>
                         </div>
@@ -242,7 +115,7 @@ else if (ViewStatus == true && AddResultsViewStatus == false)
                             </div>
 
                             <div class="col-lg-6">
-                                <input class="form-control" placeholder="">
+                                <input @bind="Investigation.TestResult" class="form-control" placeholder="">
                             </div>
                         </div>
 
@@ -252,7 +125,7 @@ else if (ViewStatus == true && AddResultsViewStatus == false)
                                 <label class="form-label">Result Unit</label>
                             </div>
                             <div class="col-lg-6">
-                                <input class="form-control" placeholder="">
+                                <input @bind="Investigation.ResultUnit" class="form-control" placeholder="">
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -260,7 +133,7 @@ else if (ViewStatus == true && AddResultsViewStatus == false)
                                 <label class="form-label">Normal Refference Range</label>
                             </div>
                             <div class="col-lg-6">
-                                <input class="form-control" placeholder="">
+                                <input @bind="Investigation.RefRange" class="form-control" placeholder="">
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -268,7 +141,7 @@ else if (ViewStatus == true && AddResultsViewStatus == false)
                                 <label class="form-label">Flag</label>
                             </div>
                             <div class="col-lg-6">
-                                <select id="ForminputState" class="form-select" data-choices="" data-choices-sorting="true">
+                                <select @bind="Investigation.Flag" id="ForminputState" class="form-select" data-choices="" data-choices-sorting="true">
                                     <option selected="">Select...</option>
                                     <option>Normal</option>
                                     <option>Abnormal</option>
@@ -281,7 +154,7 @@ else if (ViewStatus == true && AddResultsViewStatus == false)
                                 <label class="form-label">Date Conducted</label>
                             </div>
                             <div class="col-lg-6">
-                                <input type="date" class="form-control" id="exampleInputdate">
+                                <input @bind="Investigation.DateConducted" type="date" class="form-control" id="exampleInputdate">
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -289,7 +162,7 @@ else if (ViewStatus == true && AddResultsViewStatus == false)
                                 <label class="form-label">Time Reported On</label>
                             </div>
                             <div class="col-lg-6">
-                                <input type="time" class="form-control" id="exampleInputtime">
+                                <input @bind="Investigation.TimeReported" type="time" class="form-control" id="exampleInputtime">
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -297,7 +170,7 @@ else if (ViewStatus == true && AddResultsViewStatus == false)
                                 <label class="form-label">Conducted By</label>
                             </div>
                             <div class="col-lg-6">
-                                <input class="form-control" placeholder="">
+                                <input @bind="Investigation.ConductedBy" class="form-control" placeholder="">
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -305,7 +178,7 @@ else if (ViewStatus == true && AddResultsViewStatus == false)
                                 <label class="form-label">Diagnosis Summary</label>
                             </div>
                             <div class="col-lg-6">
-                                <textarea class="form-control" id="exampleFormControlTextarea5" rows="3"></textarea>
+                                <textarea @bind="Investigation.Summary" class="form-control" id="exampleFormControlTextarea5" rows="3"></textarea>
                             </div>
                         </div>
                         
@@ -323,31 +196,42 @@ else if (ViewStatus == true && AddResultsViewStatus == false)
 
 @code {
 
-    public bool ViewStatus { get; set; }
-    public bool AddResultsViewStatus { get; set; }
+    [Parameter]
+    public int EmpId { get; set; } 
+
     public bool AddTestResultToggle { get; set; }
 
-    public void ToggleView()
+    public List<MyExaminationCategoryModel> ExamCategories = new();
+    public List<MyExaminationTypeModel> ExamTypes = new();
+    public MyInvestigationModel Investigation = new();
+    public List<MyInvestigationModel> InvestigationList = new(0);
+
+    public int ItemId { get; set; }
+
+    protected override void OnInitialized()
     {
-        ViewStatus = true;
+        //AddResultsViewStatus = true;
+        ExamCategories = patientDb.AllExaminationCategories();
+        InvestigationList = patientDb.AllInvestigations(EmpId);
     }
 
-    public void SaveVitals()
+    public void SaveInvestigation()
     {
-        ViewStatus = false;
-    }
-
-    public void ViewAddResults()
-    {
-        AddResultsViewStatus = true;
+        Investigation.EmpId = EmpId;
+        Investigation.ExaminationCategoryId = ItemId;
+        patientDb.AddInvestigation(Investigation);
+        AddTestResultToggle = false;
     }
 
     public void ViewAddTestResult()
     {
         AddTestResultToggle = true;
-        //AddResultsViewStatus = false;
-        // AddResultsViewStatus = false;
-        // ViewStatus = false;
+    }
+
+    private void FillExamType()
+    {
+        ExamTypes = new();
+        ExamTypes = patientDb.AllExaminationTypes(ItemId);
     }
 
 }

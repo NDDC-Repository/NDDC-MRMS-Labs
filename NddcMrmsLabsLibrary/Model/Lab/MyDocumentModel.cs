@@ -9,6 +9,7 @@ namespace NddcMrmsLabsLibrary.Model.Lab
     public class MyDocumentModel
     {
         public int Id { get; set; }
+        public int MyEmpId { get; set; }
         public string EmployeeCode { get; set; }
         public string DocTitile { get; set; }
         public string DocDesc { get; set; }

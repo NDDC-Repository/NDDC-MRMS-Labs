@@ -11,6 +11,7 @@
     <PackageReference Include="Microsoft.Identity.Web" Version="2.13.2" />
     <PackageReference Include="Microsoft.Identity.Web.UI" Version="2.13.2" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.16" />
+    <PackageReference Include="Syncfusion.Blazor.Notifications" Version="23.2.6" />
   </ItemGroup>
 
   <ItemGroup>

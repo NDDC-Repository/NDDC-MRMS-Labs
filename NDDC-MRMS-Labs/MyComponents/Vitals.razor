@@ -1,4 +1,5 @@
 ﻿
+@inject IPatientData pateintDb
 
 @if (ViewStatus == false)
 {
@@ -18,74 +19,37 @@
                                     <label class="form-check-label" for="cardtableCheck"></label>
                                 </div>
                             </th>
-                            <th scope="col">Case Number</th>
-                            <th scope="col">Conducted By</th>
+                            <th scope="col">S/N</th>
                             <th scope="col">Date</th>
-                            <th scope="col">Status</th>
-                            <th scope="col">Action</th>
+                            <th scope="col">Temperature</th>
+                            <th scope="col">Pulse Rate</th>
+                            <th scope="col">SpO2</th>
+                            <th scope="col">BP</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="cardtableCheck01">
-                                    <label class="form-check-label" for="cardtableCheck01"></label>
-                                </div>
-                            </td>
-                            <td><a href="#" class="fw-semibold">#VL2110</a></td>
-                            <td>William Elmore</td>
-                            <td>07 Oct, 2021</td>
-                            <td><span class="badge bg-success">Good</span></td>
-                            <td>
-                                <button type="button" class="btn btn-sm btn-light">Details</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="cardtableCheck02">
-                                    <label class="form-check-label" for="cardtableCheck02"></label>
-                                </div>
-                            </td>
-                            <td><a href="#" class="fw-semibold">#VL2109</a></td>
-                            <td>Georgie Winters</td>
-                            <td>07 Oct, 2021</td>
-                            <td><span class="badge bg-success">Good</span></td>
-                            <td>
-                                <button type="button" class="btn btn-sm btn-light">Details</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="cardtableCheck03">
-                                    <label class="form-check-label" for="cardtableCheck03"></label>
-                                </div>
-                            </td>
-                            <td><a href="#" class="fw-semibold">#VL2108</a></td>
-                            <td>Whitney Meier</td>
-                            <td>06 Oct, 2021</td>
-                            <td><span class="badge bg-danger">Poor</span></td>
-                            <td>
-                                <button type="button" class="btn btn-sm btn-light">Details</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="cardtableCheck04">
-                                    <label class="form-check-label" for="cardtableCheck04"></label>
-                                </div>
-                            </td>
-                            <td><a href="#" class="fw-semibold">#VL2107</a></td>
-                            <td>Justin Maier</td>
-                            <td>05 Oct, 2021</td>
-                            <td><span class="badge bg-success">Good</span></td>
-                            <td>
-                                <button type="button" class="btn btn-sm btn-light">Details</button>
-                            </td>
-                        </tr>
+                        @foreach (var item in VitalsList)
+                        {
+                            <tr>
+                                <td>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="cardtableCheck01">
+                                        <label class="form-check-label" for="cardtableCheck01"></label>
+                                    </div>
+                                </td>
+                                <td><a href="#" class="fw-semibold">@item.SrNo.</a></td>
+                                <td>@item.DateAdded</td>
+                                <td>@item.Temp</td>
+                                <td><span class="badge bg-success">@item.Pulse</span></td>
+                                <td><span class="badge bg-success">@item.Oxygen</span></td>
+                                <td><span class="badge bg-success">@item.Systolic/@item.Diastolic</span></td>
+                                <td>
+                                    <button type="button" @onclick="() => ShowEdit(item.Id)" class="btn btn-sm btn-light">Edit</button>
+                                </td>
+                            </tr>
+                        } 
+                        
+                        
                     </tbody>
                 </table>
             </div>
@@ -98,18 +62,20 @@ else
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
+                    <span class="float-end mx-2"><button type="button" @onclick="CancelSave" class="btn rounded-pill btn-secondary waves-effect waves-light">Cancel</button></span>
                     <span class="float-end"><button type="button" @onclick="SaveVitals" class="btn rounded-pill btn-success waves-effect waves-light">Save</button></span>
                     <h4 class="card-title mb-0 flex-grow-1">Medical Bio</h4>
                 </div><!-- end card header -->
                 <div class="card-body">
                     <form method="post">
+
                         <div class="row mb-3">
                             <div class="col-lg-3">
                                 <label class="form-label">Temperature</label>
                             </div>
 
                             <div class="col-lg-3">
-                                <input class="form-control" placeholder="Enter Temperature">
+                                <input class="form-control" @bind="Vital.Temp" placeholder="Enter Temperature">
                             </div>
                         </div>
 
@@ -119,7 +85,7 @@ else
                                 <label class="form-label">Pulse Rate</label>
                             </div>
                             <div class="col-lg-3">
-                                <input class="form-control" placeholder="Enter Pulse Rate">
+                                <input class="form-control" @bind="Vital.Pulse" placeholder="Enter Pulse Rate">
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -127,7 +93,7 @@ else
                                 <label class="form-label">Blood Oxygen (SpO2)</label>
                             </div>
                             <div class="col-lg-3">
-                                <input class="form-control" placeholder="Enter Blood Oxygen">
+                                <input class="form-control" @bind="Vital.Oxygen" placeholder="Enter Blood Oxygen">
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -135,10 +101,10 @@ else
                                 <label class="form-label">Blood Pressure</label>
                             </div>
                             <div class="col-lg-3">
-                                <input class="form-control" placeholder="Systolic">
+                                <input class="form-control" @bind="Vital.Systolic" placeholder="Systolic">
                             </div>
                             <div class="col-lg-3">
-                                <input class="form-control" placeholder="Diastolic">
+                                <input class="form-control" @bind="Vital.Diastolic" placeholder="Diastolic">
                             </div>
                         </div>
                        @*  <div class="row mb-3">
@@ -164,19 +130,146 @@ else
     </div>
 }
 
+@if (EditVitals == true)
+{
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <span class="float-end mx-2"><button type="button" @onclick="CancelUpdate" class="btn rounded-pill btn-secondary waves-effect waves-light">Cancel</button></span>
+                    <span class="float-end"><button type="button" @onclick="UpdateVitals" class="btn rounded-pill btn-success waves-effect waves-light">Update</button></span>
+                    <h4 class="card-title mb-0 flex-grow-1">Medical Bio</h4>
+                </div><!-- end card header -->
+                <div class="card-body">
+                    <form method="post">
+                        <input class="form-control" hidden="true" @bind="Vital.Id" placeholder="Enter Temperature">
+                        <div class="row mb-3">
+                            <div class="col-lg-3">
+                                <label class="form-label">Temperature</label>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <input class="form-control" @bind="Vital.Temp" placeholder="Enter Temperature">
+                            </div>
+                        </div>
+
+
+                        <div class="row mb-3">
+                            <div class="col-lg-3">
+                                <label class="form-label">Pulse Rate</label>
+                            </div>
+                            <div class="col-lg-3">
+                                <input class="form-control" @bind="Vital.Pulse" placeholder="Enter Pulse Rate">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-lg-3">
+                                <label class="form-label">Blood Oxygen (SpO2)</label>
+                            </div>
+                            <div class="col-lg-3">
+                                <input class="form-control" @bind="Vital.Oxygen" placeholder="Enter Blood Oxygen">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-lg-3">
+                                <label class="form-label">Blood Pressure</label>
+                            </div>
+                            <div class="col-lg-3">
+                                <input class="form-control" @bind="Vital.Systolic" placeholder="Systolic">
+                            </div>
+                            <div class="col-lg-3">
+                                <input class="form-control" @bind="Vital.Diastolic" placeholder="Diastolic">
+                            </div>
+                        </div>
+                        @*  <div class="row mb-3">
+                    <div class="col-lg-3">
+                    <label class="form-label">Disabilities</label>
+                    </div>
+                    <div class="col-lg-3">
+                    <select id="ForminputState" class="form-select" data-choices="" data-choices-sorting="true">
+                    <option selected="">Choose...</option>
+                    <option>Yes</option>
+                    <option>No</option>
+                    </select>
+                    </div>
+                    </div> *@
+                        @*  <div class="text-end">
+                    <button type="submit" class="btn btn-primary">Add Bank</button>
+                    </div> *@
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!--end col-->
+    </div>
+}
+
 
 @code {
 
+    public MyVitalsModel Vital = new();
+    public List<MyVitalsModel> VitalsList = new();
+    public Boolean EditVitals { get; set; }
+
+    [Parameter]
+    public int EmpId { get; set; }        
+
     public bool ViewStatus { get; set; }
+
+    protected override void OnInitialized()
+    {
+        if (pateintDb.GetVitals != null)
+        {
+            VitalsList = pateintDb.GetVitals(EmpId);
+        }
+
+    }
 
     public void ToggleView()
     {
+        //clearing the values for the entry form
+        Vital = new();
         ViewStatus = true;
+    }
+
+    public void CancelSave()
+    {
+
+        ViewStatus = false;
     }
 
     public void SaveVitals()
     {
+        Vital.EmpId = EmpId;
+        Vital.DateAdded = DateTime.Now;
+        Vital.AddedBy = "Admin";
+
+        pateintDb.AddVitals(Vital);
+        VitalsList = pateintDb.GetVitals(EmpId);
+
         ViewStatus = false;
     }
 
+    private void ShowEdit(int Id)
+    {
+        Vital = new();
+        Vital = pateintDb.GetVitalDetails(Id);
+
+        ViewStatus = false;
+        EditVitals = true;
+    }
+
+    private void UpdateVitals()
+    {
+        pateintDb.UpdateVital(Vital);
+        VitalsList = pateintDb.GetVitals(EmpId);
+        EditVitals = false;
+    }
+
+    public void CancelUpdate()
+    {
+
+        ViewStatus = false;
+        EditVitals = false;
+    }
 }
