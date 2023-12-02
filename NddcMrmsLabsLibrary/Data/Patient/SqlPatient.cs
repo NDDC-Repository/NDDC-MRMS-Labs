@@ -47,15 +47,7 @@ namespace NddcMrmsLabsLibrary.Data.Patient
         }
 
         //Investigations
-        //public void AddInvestigation(MyInvestigationModel invest)
-        //{
-        //    db.SaveData("Insert Into Investigations (EmpId, TestDescription, ConductedBy, DateConducted) Values (@EmpId, @TestDescription, @ConductedBy, @DateConducted)", new { invest.EmpId, invest.TestDescription, invest.ConductedBy, invest.DateConducted }, connectionStringName, false);
-        //}
-        //public List<MyInvestigationModel> AllInvestigations()
-        //{
-        //    return db.LoadData<MyInvestigationModel, dynamic>("Select Id, EmpId, TestDescription, ConductedBy, DateConducted From Investigations Order By Id Desc ", new { }, connectionStringName, false).ToList();
-        //}
-
+       
         public void AddInvestigation(MyInvestigationModel investDet)
         {
             db.SaveData("Insert Into Investigations (EmpId, ExaminationYear, ExaminationCategoryId, ExaminationTypeId, TestResult, ResultUnit, RefRange, Flag, DateConducted, TimeReported, ConductedBy, Summary) Values(@EmpId, @ExaminationYear, @ExaminationCategoryId, @ExaminationTypeId, @TestResult, @ResultUnit, @RefRange, @Flag, @DateConducted, @TimeReported, @ConductedBy, @Summary)", new { investDet.EmpId, investDet.ExaminationYear, investDet.ExaminationCategoryId, investDet.ExaminationTypeId, investDet.TestResult, investDet.ResultUnit, investDet.RefRange, investDet.Flag, investDet.DateConducted, investDet.TimeReported, investDet.ConductedBy, investDet.Summary }, connectionStringName, false);
@@ -72,9 +64,27 @@ namespace NddcMrmsLabsLibrary.Data.Patient
         {
             return db.LoadData<MyExaminationTypeModel, dynamic>("SELECT Id, ExaminationType From ExaminationTypes Where ExaminationCategoryId = @Id ", new { Id }, connectionStringName, false).ToList();
         }
-        //public MyInvestigationDetailsModel InvestigationDetail(int investigationId)
-        //{
-        //	return db.LoadData<MyInvestigationDetailsModel, dynamic>("Select EmpId, Temp, Pulse, Oxygen, Systolic, Diastolic, DateAdded, AddedBy From Vitals Where EmpId = empId", new { empId }, connectionStringName, false).FirstOrDefault();
-        //}
+
+        //Medical Reports
+
+        public void AddMedicalReport(MyMedicalReportModel medicalReport)
+        {
+            //medicalReport.DateAdded = DateTime.Now;
+            //medicalReport.AddedBy = "Admin";
+
+            db.SaveData("Insert Into MedicalReport (EmpId, ReportTitle, ExaminationYear, FileName, AddedBy, DateAdded) Values(@EmpId, @ReportTitle, @ExaminationYear, @FileName, @AddedBy, @DateAdded)", new { medicalReport.EmpId, medicalReport.ReportTitle, medicalReport.ExaminationYear, medicalReport.FileName, medicalReport.AddedBy, medicalReport.DateAdded }, connectionStringName, false);
+        }
+        public MyMedicalReportModel GetMedicalReportDetails(int Id)
+        {
+            return db.LoadData<MyMedicalReportModel, dynamic>("Select EmpId, ReportTitle, ExaminationYear, FileName From MedicalReport Where EmpId = @Id", new { Id }, connectionStringName, false).FirstOrDefault();
+        }
+        public List<MyMedicalReportModel> GetMedicalReportList(int empId)
+        {
+            return db.LoadData<MyMedicalReportModel, dynamic>("Select ROW_NUMBER() OVER (ORDER BY Id DESC) As SrNo, EmpId, Id, ReportTitle, ExaminationYear, FileName From MedicalReport Where EmpId = @empId Order By Id DESC", new { empId }, connectionStringName, false).ToList();
+        }
+        public void UpdateMedicalReport(MyMedicalReportModel medicalReport)
+        {
+            db.SaveData("Update MedicalReport Set ReportTitle = @ReportTitle, ExaminationYear = @ExaminationYear, FileName = @FileName", new { medicalReport.ReportTitle, medicalReport.ExaminationYear, medicalReport.FileName }, connectionStringName, false);
+        }
     }
 }

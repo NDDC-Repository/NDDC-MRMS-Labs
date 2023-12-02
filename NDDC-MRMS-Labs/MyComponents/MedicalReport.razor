@@ -1,0 +1,198 @@
+﻿@using NddcMrmsLabsLibrary.Data.Services.StorageService;
+@using NddcMrmsLabsLibrary.Model.StorageModel;
+
+@inject IStorageService storage
+@inject IPatientData patientDb
+@inject IConfiguration config
+
+@if (ShowFileList == true)
+{
+    <div class="card">
+        <div class="card-header">
+            <span class="float-end"><button type="button" @onclick="ToggleView" class="btn rounded-pill btn-success waves-effect waves-light">Upload Report</button></span>
+            <h6 class="card-title mb-0">Medical Reports</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive table-card">
+                <table class="table table-nowrap table-striped-columns mb-0">
+                    <thead class="table-light">
+                        <tr>
+
+                            <th scope="col">S/N</th>
+                            <th scope="col">Examination Year</th>
+                            <th scope="col">Report Title</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in MedicReportList)
+                        {
+                            <tr>
+
+                                <td><a href="#" class="fw-semibold">@item.SrNo.</a></td>
+                                <td>@item.ExaminationYear</td>
+                                <td>@item.ReportTitle</td>
+                                <td><a href="https://d1z885rebbc6q3.cloudfront.net/@item.FileName" target="_blank" >View File</a></td>
+                                <td>
+                                    @* <button type="button" @onclick="() => ShowEdit(item.Id)" class="btn btn-sm btn-light">Edit</button> *@
+                                </td>
+                            </tr>
+                        }
+
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+}
+
+@if (ShowFileList == false)
+{
+    @if (Loading == true)
+    {
+        <h3>Uploading Report Please Wait .....</h3>
+    }
+    <EditForm Model="MedicReport" OnValidSubmit="SubmitForm">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+
+                        <span class="float-end mx-2"><button type="button" @onclick="CancelSave" class="btn rounded-pill btn-secondary waves-effect waves-light">Cancel</button></span>
+                        <span class="float-end"><button type="submit" class="btn rounded-pill btn-success waves-effect waves-light">Save</button></span>
+                        <h4 class="card-title mb-0 flex-grow-1">Medical Bio</h4>
+                    </div><!-- end card header -->
+                    <div class="card-body">
+                        <form method="post">
+                            <div class="row mb-3">
+                                <div class="col-lg-8">
+                                    <label class="form-label">Examination Year</label>
+                                </div>
+                                <div class="col-lg-8">
+                                    @* <input class="form-control" @bind="MyMedicalBio.BloodGroup" placeholder="Enter Blood Type"> *@
+                                    <select class="form-select" @bind="MedicReport.ExaminationYear">
+                                        <option value="2023">None</option>
+                                        <option value="2022">2022</option>
+                                        <option value="2023">2023</option>
+                                        <option value="2024">2024</option>
+                                        <option value="2025">2025</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-lg-8">
+                                    <label class="form-label">Report Title</label>
+                                </div>
+
+                                <div class="col-lg-8">
+                                    <input id="cleave-numeral" class="form-control" @bind="MedicReport.ReportTitle">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-lg-8">
+                                    <label class="form-label">Attach File</label>
+                                </div>
+                                <div class="col-lg-8">
+                                    <InputFile OnChange="@LoadFile" class="form-control"></InputFile>
+                                    
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!--end col-->
+        </div>
+    </EditForm>
+}
+
+
+
+@code {
+
+    private long maxFileSize = 1024 * 1024 * 5; // represents 3MB
+
+    public Boolean Loading { get; set; }
+
+    public string ContainerUrl { get; set; }
+
+
+    [Parameter]
+    public int EmpId { get; set; }
+
+    public Boolean ShowFileList { get; set; }
+
+    MyMedicalReportModel MedicReport = new();
+    List<MyMedicalReportModel> MedicReportList = new();
+
+    private IBrowserFile file;
+
+    protected override void OnInitialized()
+    {
+        ContainerUrl = config.GetConnectionString("AWSContainerUrl");
+
+        if (patientDb.GetMedicalReportList != null)
+        {
+            MedicReportList = patientDb.GetMedicalReportList(EmpId);
+        }
+
+        ShowFileList = true;
+    }
+
+    private void LoadFile(InputFileChangeEventArgs e)
+    {
+        file = e.File;
+    }
+
+    public void ToggleView()
+    {
+        if (ShowFileList == false)
+        {
+            ShowFileList = true;
+        }
+        else if (ShowFileList == true)
+        {
+            ShowFileList = false;
+        }
+    }
+
+    private async Task SubmitForm()
+    {
+
+        Loading = true;
+
+        string fileName = "Labs/" + Path.ChangeExtension(Path.GetRandomFileName(), Path.GetExtension(file.Name));
+        //string fileName = "Labs/" + file.Name;
+
+        var filestream = new MemoryStream();
+        await file.OpenReadStream(maxFileSize).CopyToAsync(filestream);
+        string contentType = file.ContentType;
+
+        MyBlobResponseModel response = await storage.UploadStreamAsync(filestream, fileName, contentType);
+
+        MedicReport.FileName = response.Blob.Uri;
+        MedicReport.DateAdded = DateTime.Now;
+        MedicReport.AddedBy = "Admin";
+        MedicReport.EmpId = EmpId;
+
+        patientDb.AddMedicalReport(MedicReport);
+        MedicReportList = patientDb.GetMedicalReportList(EmpId);
+
+        ShowFileList = false;
+        ToggleView();
+    }
+
+    private void CancelSave()
+    {
+
+    }
+
+    private void SaveReport()
+    {
+        
+    }
+
+}

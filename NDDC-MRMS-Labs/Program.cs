@@ -6,6 +6,7 @@ using NddcMrmsLabsLibrary.Data.Employee;
 using NddcMrmsLabsLibrary.Data.Helper;
 using NddcMrmsLabsLibrary.Data.Labs;
 using NddcMrmsLabsLibrary.Data.Patient;
+using NddcMrmsLabsLibrary.Data.Services.StorageService;
 using NddcMrmsLabsLibrary.Databases;
 using Syncfusion.Blazor;
 
@@ -22,6 +23,7 @@ builder.Services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
 builder.Services.AddTransient<IEmployeeData, SqlEmployee>();
 builder.Services.AddTransient<IPatientData, SqlPatient>();
 builder.Services.AddSyncfusionBlazor();
+builder.Services.AddTransient<IStorageService, AWSStorageService>();
 
 builder.Services.AddAuthorization(options =>
 {
