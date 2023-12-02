@@ -117,7 +117,7 @@ else
                             </div>
 
                             <div class="col-lg-1">
-                                <input id="cleave-numeral" class="form-control" @bind="@MyMedicalBio.Height" @onfocusout="CalculateBMI" placeholder="Enter Hieght">
+                                <input id="cleave-numeral" type="number" class="form-control" @bind="@MyMedicalBio.Height" @onfocusout="CalculateBMI" placeholder="Enter Hieght">
                             </div>
                             <div class="col-lg-2">
                                 <label class="form-label">Unit - Meters(m)</label>
@@ -128,7 +128,7 @@ else
                                 <label class="form-label">Weight</label>
                             </div>
                             <div class="col-lg-1">
-                                <input class="form-control" @bind="MyMedicalBio.Weight" @onfocusout="CalculateBMI" placeholder="Enter Blood Group">
+                                <input class="form-control" type="number" @bind="MyMedicalBio.Weight" @onfocusout="CalculateBMI" placeholder="Enter Blood Group">
                             </div>
                             <div class="col-lg-2">
                                 <label class="form-label">Unit - Kilograms(kg)</label>
