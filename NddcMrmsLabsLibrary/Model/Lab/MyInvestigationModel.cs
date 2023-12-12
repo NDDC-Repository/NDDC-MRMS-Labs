@@ -24,8 +24,9 @@ namespace NddcMrmsLabsLibrary.Model.Lab
 		public string ConductedBy { get; set; }
 		public string Summary { get; set; }
 
-        public string ExaminationType { get; set; }	
-
+        public string ExaminationType { get; set; }
+        public string AddedBy { get; set; }
+        public int LabId { get; set; }
 
 
 

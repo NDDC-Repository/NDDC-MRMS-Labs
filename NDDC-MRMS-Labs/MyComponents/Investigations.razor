@@ -1,7 +1,8 @@
-﻿
+﻿@using Microsoft.AspNetCore.Identity;
+@using NddcMrmsLabsLibrary.Data.Labs;
+
 @inject IPatientData patientDb
-
-
+@inject ILabsData labDb
 
 @if (AddTestResultToggle == false)
 {
@@ -36,7 +37,7 @@
                                 <td><span>@item.RefRange</span></td>
                                 <td><span>@item.DateConducted</span></td>
                                 <td>
-                                    <button type="button" class="btn btn-sm btn-light">Details</button>
+                                    <button type="button" @onclick="() => ShowEditControls(item.Id)" class="btn btn-sm btn-light">Edit</button>
                                 </td>
                             </tr>
                         }
@@ -46,6 +47,11 @@
             </div>
         </div>
     </div>
+
+    @if (ShowEdit)
+    {
+        <p>Show Edit</p>
+    }
 }
 
 @if (AddTestResultToggle == true)
@@ -54,11 +60,16 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <span class="float-end"><button type="button" @onclick="SaveInvestigation" class="btn rounded-pill btn-success waves-effect waves-light">Save</button></span>
+                    <div class="float-end h-stack">
+                        <button type="button" @onclick="SaveInvestigation" class="btn rounded-pill btn-success waves-effect waves-light">Save</button>
+                        <button type="button" @onclick="CancelSave" class="btn rounded-pill btn-secondary waves-effect waves-light">Cancel</button>
+                    </div> 
+                    @* <span class="float-end"><button type="button" @onclick="SaveInvestigation" class="btn rounded-pill btn-success waves-effect waves-light">Save</button></span> *@
                     <h4 class="card-title mb-0 flex-grow-1">Test Results</h4>
                 </div><!-- end card header -->
                 <div class="card-body">
                     <form method="post">
+                        <input hidden="true" @bind="Investigation.Id" class="form-control" placeholder="">
                         <div class="row mb-3">
                             <div class="col-lg-3">
                                 <label class="form-label">Medical Examination Year</label>
@@ -80,7 +91,7 @@
                             </div>
                             <div class="col-lg-6">
                                 @* This bind:event helps to distract the conflict between bind and onchange to allow the onchange event fire *@
-                                <select class="form-select" @bind="ItemId" @bind:event="oninput" @onchange="FillExamType">
+                                <select class="form-select" @bind="Investigation.ExaminationCategoryId" @bind:event="oninput" @onchange="FillExamType">
                                     <option value="0">Choose...</option>
                                     @if (ExamCategories != null)
                                     {
@@ -198,6 +209,10 @@
 
     [Parameter]
     public int EmpId { get; set; } 
+    [Parameter]
+    public string UserId { get; set; }
+    [Parameter]
+    public int LabId { get; set; }
 
     public bool AddTestResultToggle { get; set; }
 
@@ -208,6 +223,10 @@
 
     public int ItemId { get; set; }
 
+    public Boolean ShowEdit { get; set; }
+
+    public MyRequestModel Request = new();
+
     protected override void OnInitialized()
     {
         //AddResultsViewStatus = true;
@@ -215,12 +234,55 @@
         InvestigationList = patientDb.AllInvestigations(EmpId);
     }
 
+    // [CascadingParameter]
+    // private Task<AuthenticationState> authenticationStateTask { get; set; }
+
+    // [Inject]
+    // UserManager<IdentityUser> userManager { get; set; }
+
     public void SaveInvestigation()
     {
-        Investigation.EmpId = EmpId;
-        Investigation.ExaminationCategoryId = ItemId;
-        patientDb.AddInvestigation(Investigation);
-        AddTestResultToggle = false;
+        //var user = (await authenticationStateTask).User;
+
+        if (Investigation.Id == 0)
+        {
+            Investigation.EmpId = EmpId;
+            Investigation.LabId = LabId;
+            Investigation.AddedBy = UserId;
+
+            //Investigation.ExaminationCategoryId = ItemId;
+            patientDb.AddInvestigation(Investigation);
+            InvestigationList = patientDb.AllInvestigations(EmpId);
+
+            AddTestResultToggle = false;
+        }
+        else
+        {
+            //var currentUser = await userManager.GetUserAsync(user);
+
+            Request.InvestigationId = Investigation.Id;
+            Request.UserName = UserId;
+            Request.RequestedBy = labDb.GetLabUserFullName(UserId);
+            Request.RequestedFrom = labDb.GetLabName(LabId);
+            Request.RequestType = "Edit";
+            Request.ExaminationYear = Investigation.ExaminationYear;
+            Request.ExaminationCategoryId = Investigation.ExaminationCategoryId;
+            Request.ExaminationTypeId = Investigation.ExaminationTypeId;
+            Request.Result = Investigation.TestResult;
+            Request.ResultUnit = Investigation.ResultUnit;
+            Request.RefRange = Investigation.RefRange;
+            Request.Flag = Investigation.Flag;
+            Request.DateConducted = Investigation.DateConducted;
+            Request.TimeReportedOn = Investigation.TimeReported;
+            Request.Summary = Investigation.Summary;
+            Request.DateRequested = DateTime.Now;
+            Request.Status = "Pending";
+
+            patientDb.AddRequest(Request);
+
+            AddTestResultToggle = false;
+        }
+
     }
 
     public void ViewAddTestResult()
@@ -231,7 +293,22 @@
     private void FillExamType()
     {
         ExamTypes = new();
-        ExamTypes = patientDb.AllExaminationTypes(ItemId);
+        ExamTypes = patientDb.AllExaminationTypes(Investigation.ExaminationCategoryId);
+    }
+    private void CancelSave()
+    {
+        Investigation = new();
+        AddTestResultToggle = false;
+    }
+
+    private void ShowEditControls(int Id)
+    {
+        
+        //ShowEdit = true;
+        Investigation = patientDb.GetInvestigationDetails(Id);
+        ExamCategories = patientDb.AllExaminationCategories();
+        ExamTypes = patientDb.AllExaminationTypes(Investigation.ExaminationCategoryId);
+        AddTestResultToggle = true;
     }
 
 }

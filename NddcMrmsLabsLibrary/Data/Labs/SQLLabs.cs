@@ -2,6 +2,7 @@
 using NddcMrmsLabsLibrary.Model;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,9 +30,9 @@ namespace NddcMrmsLabsLibrary.Data.Labs
             return labId;
 
         }
-        public void AddLabUser(int labId, string userId)
+        public void AddLabUser(int labId, string userId, string email, string givenName, string surname, DateTime dateCreated)
         {
-            db.SaveData("Insert Into LabUsers (LabId, UserId) values(@LabId, @UserId)", new { LabID = labId, UserId = userId }, connectionStringName, false);
+            db.SaveData("Insert Into LabUsers (LabId, UserId, Email, GivenName, Surname, DateCreated) values(@LabId, @UserId, @Email, @GivenName, @Surname, @DateCreated)", new { LabID = labId, UserId = userId, Email = email, GivenName = givenName, Surname = surname, DateCreated = dateCreated }, connectionStringName, false);
         }
         public bool UserExistsInLab(string userId)
         {
@@ -52,6 +53,18 @@ namespace NddcMrmsLabsLibrary.Data.Labs
                 return true;
             }
             return false;
+        }
+        public int GetLabId(string userId)
+        {
+            return db.LoadData<int, dynamic>("Select LabId From LabUsers Where UserId = @UserId", new { UserId = userId }, connectionStringName, false).FirstOrDefault();
+        }
+        public string GetLabName(int Id)
+        {
+            return db.LoadData<string, dynamic>("Select LabName From Laboratories Where Id = @Id", new { Id = Id }, connectionStringName, false).FirstOrDefault();
+        }
+        public string GetLabUserFullName(string userId)
+        {
+            return db.LoadData<string, dynamic>("Select GivenName + ' ' + Surname As FullName From LabUsers Where UserId = @UserId", new { UserId = userId }, connectionStringName, false).FirstOrDefault();
         }
     }
 }

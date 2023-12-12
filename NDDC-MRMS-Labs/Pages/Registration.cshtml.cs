@@ -37,8 +37,11 @@ namespace NDDC_MRMS_Labs.Pages
                 int labId = labDb.AddLab(Laboratory);
 
                 string userId = User.Claims.FirstOrDefault(c => c.Type.Contains("id"))?.Value;
+                string email = User.Claims.FirstOrDefault(c => c.Type.Contains("email"))?.Value;
+                string givenName = User.Claims.FirstOrDefault(c => c.Type.Contains("givenname"))?.Value;
+                string surename = User.Claims.FirstOrDefault(c => c.Type.Contains("surname"))?.Value;
 
-                labDb.AddLabUser(labId, userId);
+                labDb.AddLabUser(labId, userId, email, givenName, surename, DateTime.Now);
 
                 return RedirectToPage("Success");
             }

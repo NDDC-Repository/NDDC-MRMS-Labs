@@ -199,7 +199,7 @@
         <component type="typeof(NDDC_MRMS_Labs.MyComponents.Vitals)" param-EmpId="@Model.EmpId" render-mode="ServerPrerendered" />
     </div>
     <div class="tab-pane" id="investigations" role="tabpanel">
-        <component type="typeof(NDDC_MRMS_Labs.MyComponents.Investigations)" param-EmpId="@Model.EmpId" render-mode="ServerPrerendered" />
+        <component type="typeof(NDDC_MRMS_Labs.MyComponents.Investigations)" param-EmpId="@Model.EmpId" param-UserId="@Model.UserId" param-LabId="@Model.LabId" render-mode="ServerPrerendered" />
     </div>
     <div class="tab-pane" id="medReport" role="tabpanel">
         <component type="typeof(NDDC_MRMS_Labs.MyComponents.MedicalReport)" param-EmpId="@Model.EmpId" render-mode="ServerPrerendered" />

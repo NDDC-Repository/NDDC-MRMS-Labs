@@ -50,11 +50,15 @@ namespace NddcMrmsLabsLibrary.Data.Patient
        
         public void AddInvestigation(MyInvestigationModel investDet)
         {
-            db.SaveData("Insert Into Investigations (EmpId, ExaminationYear, ExaminationCategoryId, ExaminationTypeId, TestResult, ResultUnit, RefRange, Flag, DateConducted, TimeReported, ConductedBy, Summary) Values(@EmpId, @ExaminationYear, @ExaminationCategoryId, @ExaminationTypeId, @TestResult, @ResultUnit, @RefRange, @Flag, @DateConducted, @TimeReported, @ConductedBy, @Summary)", new { investDet.EmpId, investDet.ExaminationYear, investDet.ExaminationCategoryId, investDet.ExaminationTypeId, investDet.TestResult, investDet.ResultUnit, investDet.RefRange, investDet.Flag, investDet.DateConducted, investDet.TimeReported, investDet.ConductedBy, investDet.Summary }, connectionStringName, false);
+            db.SaveData("Insert Into Investigations (EmpId, ExaminationYear, ExaminationCategoryId, ExaminationTypeId, TestResult, ResultUnit, RefRange, Flag, DateConducted, TimeReported, ConductedBy, Summary, AddedBy, LabId) Values(@EmpId, @ExaminationYear, @ExaminationCategoryId, @ExaminationTypeId, @TestResult, @ResultUnit, @RefRange, @Flag, @DateConducted, @TimeReported, @ConductedBy, @Summary, @AddedBy, @LabId)", new { investDet.EmpId, investDet.ExaminationYear, investDet.ExaminationCategoryId, investDet.ExaminationTypeId, investDet.TestResult, investDet.ResultUnit, investDet.RefRange, investDet.Flag, investDet.DateConducted, investDet.TimeReported, investDet.ConductedBy, investDet.Summary, investDet.AddedBy, investDet.LabId }, connectionStringName, false);
         }
         public List<MyInvestigationModel> AllInvestigations(int empId)
         {
-            return db.LoadData<MyInvestigationModel, dynamic>("SELECT Investigations.Id, ROW_NUMBER() OVER (ORDER BY Investigations.Id DESC) As SrNo, Investigations.EmpId, Investigations.ExaminationYear, Investigations.ExaminationTypeId, Investigations.TestResult, Investigations.RefRange, Investigations.Flag, Investigations.ResultUnit, ExaminationTypes.ExaminationType FROM Investigations Left JOIN ExaminationTypes ON Investigations.ExaminationTypeId = ExaminationTypes.Id Where Investigations.EmpId = @empId Order By Investigations.Id DESC", new { empId }, connectionStringName, false).ToList();
+            return db.LoadData<MyInvestigationModel, dynamic>("SELECT Investigations.Id, ROW_NUMBER() OVER (ORDER BY Investigations.Id DESC) As SrNo, Investigations.EmpId, Investigations.ExaminationYear, Investigations.ExaminationTypeId, Investigations.TestResult, Investigations.RefRange, Investigations.Flag, Investigations.ResultUnit, Investigations.DateConducted, ExaminationTypes.ExaminationType FROM Investigations Left JOIN ExaminationTypes ON Investigations.ExaminationTypeId = ExaminationTypes.Id Where Investigations.EmpId = @empId Order By Investigations.Id DESC", new { empId }, connectionStringName, false).ToList();
+        }
+        public MyInvestigationModel GetInvestigationDetails(int Id)
+        {
+            return db.LoadData<MyInvestigationModel, dynamic>("SELECT Investigations.Id, Investigations.EmpId, Investigations.ExaminationYear, Investigations.ExaminationTypeId, Investigations.TestResult, Investigations.RefRange, Investigations.Flag, Investigations.ResultUnit, Investigations.DateConducted, Investigations.TimeReported, Investigations.ExaminationCategoryId, Investigations.ExaminationTypeId, Investigations.ConductedBy, Investigations.Summary, ExaminationTypes.ExaminationType FROM Investigations Left JOIN ExaminationTypes ON Investigations.ExaminationTypeId = ExaminationTypes.Id Where Investigations.Id = @Id", new { Id }, connectionStringName, false).FirstOrDefault();
         }
         public List<MyExaminationCategoryModel> AllExaminationCategories()
         {
@@ -86,5 +90,15 @@ namespace NddcMrmsLabsLibrary.Data.Patient
         {
             db.SaveData("Update MedicalReport Set ReportTitle = @ReportTitle, ExaminationYear = @ExaminationYear, FileName = @FileName", new { medicalReport.ReportTitle, medicalReport.ExaminationYear, medicalReport.FileName }, connectionStringName, false);
         }
+
+        //Requests
+        public void AddRequest(MyRequestModel request)
+        {
+            //medicalReport.DateAdded = DateTime.Now;
+            //medicalReport.AddedBy = "Admin";
+
+            db.SaveData("Insert Into Requests (InvestigationId, UserName, RequestType, RequestedBy, RequestedFrom, ExaminationYear, ExaminationCategoryId, ExaminationTypeId, Result, ResultUnit, RefRange, Flag, DateConducted, TimeReportedOn, Summary, DateRequested) Values(@InvestigationId, @UserName, @RequestType, @RequestedBy, @RequestedFrom, @ExaminationYear, @ExaminationCategoryId, @ExaminationTypeId, @Result, @ResultUnit, @RefRange, @Flag, @DateConducted, @TimeReportedOn, @Summary, @DateRequested)", new { request.InvestigationId, request.UserName, request.RequestType, request.RequestedBy, request.RequestedFrom, request.ExaminationYear, request.ExaminationCategoryId, request.ExaminationTypeId, request.Result, request.ResultUnit, request.RefRange, request.Flag, request.DateConducted, request.TimeReportedOn, request.Summary, request.DateRequested }, connectionStringName, false);
+        }
+
     }
 }
